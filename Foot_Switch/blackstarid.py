@@ -409,9 +409,11 @@ class BlackstarIDAmp(object):
         self.model = self.amp_models[dev.idProduct]
 
     def __del__(self):
-        if self.connected:
-            self.disconnect()
-
+        try:
+            if self.connected:
+                self.disconnect()
+        except:
+            pass
     def disconnect(self):
         '''Disconnect from the amplifer and release all resources. If we're
         already disconnected, this method is a no-op
@@ -890,7 +892,10 @@ class BlackstarIDAmp(object):
                     settings.update(s)
         else:   
             return settings
-
+        
+    def read_control(self, control):
+        return int(self.read_data()[control])
+    
     def poll_and_log(self):
         '''Test function which continuously queries the amp for data and
         logs the returned packets at the debug level.
