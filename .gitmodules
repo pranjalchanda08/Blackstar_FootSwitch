@@ -1,0 +1,3 @@
+[submodule "beeprint"]
+	path = beeprint
+	url = https://github.com/panyanyany/beeprint

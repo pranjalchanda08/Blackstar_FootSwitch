@@ -1,2 +1,9 @@
 # Blackstar_FootSwitch
-A Project to create BlackStart FootSwth over USB
+A Project to create BlackStart Foot Swith over USB
+
+
+# Installation
+
+```sh
+$ sudo apt-get install python3-setuptools python-usb
+```
