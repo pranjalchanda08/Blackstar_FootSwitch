@@ -17,12 +17,13 @@
 
 import usb.core
 import usb.util
+import usb.hotplug
 import logging
 import xml.etree.ElementTree as et
 
 # Set up logging and create a null handler in case the application doesn't
 # provide a log handler
-logger = logging.getLogger('outsider.blackstarid')
+logger = logging.getLogger(' outsider.blackstarid ')
 
 
 class __NullHandler(logging.Handler):
@@ -324,7 +325,7 @@ class BlackstarIDAmp(object):
         'reverb_type': [0, 3],
         'reverb_size': [0, 31],  # Segment value
         'reverb_level': [0, 127],
-        'fx_focus': [1, 3],
+        'fx_focus': [0, 3],
     }
 
     tuner_note = ['E', 'F', 'F#', 'G', 'G#', 'A',
@@ -338,6 +339,12 @@ class BlackstarIDAmp(object):
         self.interrupt_in = None
         self.interrupt_out = None
 
+    def hotplug_cb(self, dev, event, user_data):
+        logging.info("Hotplug Achieved!" + str(event))
+        if event == usb.hotplug.LIBUSB_HOTPLUG_EVENT_DEVICE_LEFT:
+            self.connected = False
+            
+    
     def connect(self):
 
         # Find device. Note usb.core.find returns an iterator if
@@ -404,6 +411,7 @@ class BlackstarIDAmp(object):
         self.interrupt_in = intf_in.bEndpointAddress
         self.interrupt_out = intf_out.bEndpointAddress
 
+        usb.hotplug.register_callback(0x01 | 0x02, 0, self.vendor, dev.idProduct, -1, self.hotplug_cb, 0)
         self.connected = True
         self.device = dev
         self.model = self.amp_models[dev.idProduct]
@@ -515,9 +523,10 @@ class BlackstarIDAmp(object):
         data = [0x00] * 64
 
         if control is 'delay_time':
-            data[0:4] = [0x03, ctrl_byte, 0x00, 0x02]
+            data[0:3] = [0x03, ctrl_byte, 0x00, 0x02]
             data[4] = value % 256
             data[5] = value // 256
+            
         else:
             data[0:5] = [0x03, ctrl_byte, 0x00, 0x01, value]
 
