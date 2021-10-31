@@ -20,12 +20,6 @@ class foot_switch():
         "Control" : {}
     }
     def __init__(self):
-        with open('patch.json', 'r') as patch_file:
-            file_dict = json.load(patch_file)
-            for patch in file_dict['patches']:
-                if file_dict['default'] == patch['name']:
-                    print("Default patch: " + patch['name'])
-                    self.FS_BUTTON_DICT['Control'] = patch['Control']
         GPIO.setmode(GPIO.BCM)
         for button in list(self.FS_BUTTON_DICT['Pins'].values()):
             GPIO.setup(button, GPIO.IN, pull_up_down = GPIO.PUD_UP)
@@ -43,11 +37,9 @@ class foot_switch():
                 self.alive = True
                 self.read_thread = threading.Thread(target=self.read_thread_entry, args=(1,))
                 self.read_thread.start()
-                for control in self.FS_BUTTON_DICT['Control']:
-                    print(control)
-                    if control == "delay_time":
-                        continue
-                    self.bs.set_control(control, self.FS_BUTTON_DICT['Control'][control])
+                with open('patch.json', 'r') as patch_file:
+                    file_dict = json.load(patch_file)
+                    self.set_preset(preset_name=file_dict['default'], file_dict=file_dict)
                 
         except NotConnectedError:
             raise NotConnectedError
@@ -89,7 +81,48 @@ class foot_switch():
         elif channel == self.FS_BUTTON_DICT['Pins']['FS_REV_TOGGLE']:
             self.FS_BUTTON_DICT['Control']['reverb_switch'] ^= 1;
             self.bs.set_control('reverb_switch', self.FS_BUTTON_DICT['Control']['reverb_switch'])
+    
+    def set_all_controls(self, control_dict):
+        '''
+            Set all the control params of a required patch
             
+            control_dict - Dictionary pointer of the control setting of a patch
+        '''
+        self.FS_BUTTON_DICT['Control'] = control_dict
+        for control in control_dict:
+            print(control)
+            if control == "delay_time":
+                continue
+            self.bs.set_control(control, self.FS_BUTTON_DICT['Control'][control])
+
+    def set_preset(self, preset_name, file_dict):
+        '''
+            Set all the control settings according to patch name
+            
+            preset_name - Name of the reuired preset str
+            file_dict - dictionary converted from patch.json
+        '''
+        set_flag = False
+        for patch in file_dict['patches']:
+            if preset_name == patch['name']:
+                set_flag = True
+                self.set_all_controls(patch['Control'])
+        if not set_flag:
+            logging.error("Invalid Preset")
+        
+    def set_preset_index(self, index, file_dict):
+        '''
+            Set all the control settings according to index
+            
+            index - index of the patch starting from 0
+            file_dict - dictionary converted from patch.json
+        '''
+        if index > len(file_dict['patches']):
+            logging.error("Invalid index")
+            return
+        self.set_all_controls(file_dict['patches'][index]['Control'])
+        
+
 if __name__ == '__main__':
     
     try:
