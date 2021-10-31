@@ -5,6 +5,7 @@ import threading
 import json
 import signal
 import os
+from numpy import interp
 
 class foot_switch():
     '''
@@ -42,10 +43,10 @@ class foot_switch():
                 self.read_thread.start()
                 with open('patch.json', 'r') as patch_file:
                     self.file_dict = json.load(patch_file)
-                    ret, len = self.set_preset(preset_name=self.file_dict['default'], file_dict=self.file_dict)
+                    self.patch_range_human_to_device(self.file_dict['patches'])
+                    ret, len = self.set_preset(preset_name=self.file_dict['patch_select'], file_dict=self.file_dict)
                     if ret >= 0 :
-                        self.FS_BUTTON_DICT['Patch_index'] = ret
-                        self.FS_BUTTON_DICT['Patch_len'] = len
+                        self.FS_BUTTON_DICT['Patch_index'], self.FS_BUTTON_DICT['Patch_len'] = ret, len
 
         except NotConnectedError:
             raise NotConnectedError
@@ -58,17 +59,24 @@ class foot_switch():
         except:
             pass
 
+    def patch_range_human_to_device(self, patches):
+        for patch in patches:
+            for element in patch['Control']:
+                patch['Control'][element] = int(self.map_range(
+                                                patch['Control'][element], 
+                                                self.bs.control_limits_rev[element],
+                                                self.bs.control_limits[element]))
+    
     def read_thread_entry(self, name):
         while self.alive:
             try:
                 self.FS_BUTTON_DICT['Control'].update(self.bs.read_data())
-                self.logger.info(self.FS_BUTTON_DICT['Control'])
-                
+                self.logger.info(self.FS_BUTTON_DICT['Control'])                
             except NoDataAvailable:
                 pass
             except KeyboardInterrupt:
                 self.alive = False
-        self.logger.info("read_thread_entry Killed!")
+        self.logger.info(" read_thread_entry Killed! ")
 
 
     def fs_but_callback(self, channel):
@@ -97,6 +105,9 @@ class foot_switch():
             self.FS_BUTTON_DICT['Control']['reverb_switch'] ^= 1;
             self.bs.set_control('reverb_switch', self.FS_BUTTON_DICT['Control']['reverb_switch'])
 
+    def map_range(self, val, input_range, output_range):
+        return interp(val, input_range, output_range)
+    
     def set_all_controls(self, control_dict):
         '''
             Set all the control params of a required patch
@@ -142,6 +153,7 @@ class foot_switch():
 def ctrl_c_handler(signal, abc):
     fs.__del__()
     fs.read_thread.join()
+    GPIO.cleanup()
     os._exit(0)
 
 fs = foot_switch()

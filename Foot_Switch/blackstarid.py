@@ -327,6 +327,37 @@ class BlackstarIDAmp(object):
         'reverb_level': [0, 127],
         'fx_focus': [0, 3],
     }
+    control_limits_rev = {
+        'voice': [0, 5],
+        'gain': [0, 10.0],
+        'volume': [0, 10.0],
+        'bass': [0, 10.0],
+        'middle': [0, 10.0],
+        'treble': [0, 10.0],
+        'isf': [0, 10.0],
+        'tvp_valve': [0, 5],
+        'resonance': [0, 10.0], # documentation only, never used
+        'presence': [0, 10.0], # documentation only, never used
+        'master_volume': [0, 10.0], # documentation only, never used
+        'tvp_switch': [0, 1],
+        'mod_switch': [0, 1],
+        'delay_switch': [0, 1],
+        'reverb_switch': [0, 1],
+        'mod_type': [0, 3],
+        'mod_segval': [0, 31],
+        'mod_level': [0, 10.0],
+        'mod_speed': [0, 10.0],
+        'mod_manual': [0, 10.0], # Flanger only
+        'delay_type': [0, 3],
+        'delay_feedback': [0, 31],  # Segment value
+        'delay_level': [0, 10.0],
+        'delay_time': [100, 2000],
+        'delay_time_coarse': [0, 7],  # For documentation only, never used
+        'reverb_type': [0, 3],
+        'reverb_size': [0, 31],  # Segment value
+        'reverb_level': [0, 10.0],
+        'fx_focus': [0, 3],
+    }
 
     tuner_note = ['E', 'F', 'F#', 'G', 'G#', 'A',
                   'A#', 'B', 'C', 'C#', 'D', 'D#']
