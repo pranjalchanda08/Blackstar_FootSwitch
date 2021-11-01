@@ -119,7 +119,7 @@ class foot_switch():
                 pass
             except KeyboardInterrupt:
                 self.alive = False
-        self.logger.info(" read_thread_entry Killed! ")
+        self.logger.info(" Foot Switch Thread Killed! ")
 
 
     def fs_but_callback(self, bcm_pin):
@@ -210,6 +210,7 @@ def ctrl_c_handler(signal, dummy):
     """
         Termination Signal Handler    
     """
+    global MAIN_EXIT
     fs.__del__()
     mqtt_task_q.join()
     MAIN_EXIT = True
@@ -217,8 +218,9 @@ def ctrl_c_handler(signal, dummy):
     client.loop_stop()
     os._exit(0)
 
-def main_thread_entry(name, Terminate=MAIN_EXIT):
-    while not Terminate:
+def main_thread_entry(name):
+    global MAIN_EXIT
+    while not MAIN_EXIT:
         if mqtt_task_q.empty() == False:
             control_change = mqtt_task_q.get()
             with open('json/default.json', 'r+') as json_file:
@@ -227,6 +229,7 @@ def main_thread_entry(name, Terminate=MAIN_EXIT):
                 json_file.seek(0)
                 json.dump(file_dict, json_file, sort_keys=True, indent=4)
             mqtt_task_q.task_done()
+    logger.info(" Main Thread Killed!")
             
 try:
     fs = foot_switch(logger=logger)
