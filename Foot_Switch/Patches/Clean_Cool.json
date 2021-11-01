@@ -1,0 +1,33 @@
+{
+    "name": "Clean_Cool",
+    "Control": {
+        "voice": 1,
+        "gain": 9,
+        "volume": 5,
+        "isf": 3,
+        "bass": 6,
+        "middle": 4,
+        "treble": 5,
+        "presence": 3,
+        "resonance": 4,
+        "delay_switch": 0,
+        "reverb_switch": 1,
+        "mod_switch": 0,
+        "delay_feedback": 10,
+        "delay_level": 3,
+        "delay_time": 512,
+        "delay_type": 0,
+        "reverb_level": 3,
+        "reverb_size": 10,
+        "reverb_type": 0,
+        "mod_level": 3,
+        "mod_manual": 5,
+        "mod_segval": 10,
+        "mod_speed": 3,
+        "mod_type": 0,
+        "fx_focus": 1,
+        "master_volume": 0,
+        "tvp_switch": 1,
+        "tvp_valve": 0
+    }
+}

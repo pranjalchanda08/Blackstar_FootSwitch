@@ -23,7 +23,7 @@ import xml.etree.ElementTree as et
 
 # Set up logging and create a null handler in case the application doesn't
 # provide a log handler
-logger = logging.getLogger(' outsider.blackstarid ')
+logger = logging.getLogger(' Blackstar ')
 
 
 class __NullHandler(logging.Handler):
@@ -504,9 +504,6 @@ class BlackstarIDAmp(object):
 
         # Write to endpoint, returning the number of bytes written
         bytes_written = self.device.write(self.interrupt_out, data)
-
-        logger.debug("Data length {0}, bytes written {1}".format(data_length, bytes_written))
-
         if bytes_written != data_length:
             raise WriteToAmpError(
                 'Failed to write {0} bytes to amplifier.'.format(data_length - bytes_written))
@@ -563,7 +560,7 @@ class BlackstarIDAmp(object):
 
         ret = self._send_data(data)
 
-        logger.debug('Set control: {0} to value {1}'.format(control, value))
+        logger.debug('Set control: {0} -> {1}'.format(control, value))
 
         return ret
 
@@ -979,7 +976,7 @@ if __name__ == '__main__':
     from beeprint import pp
 
     logging.basicConfig(level=logging.DEBUG)
-    logger = logging.getLogger('outsider.blackstarid')
+    logger = logging.getLogger('Blackstar')
 
     amp = BlackstarIDAmp()
     amp.connect()
