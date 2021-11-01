@@ -6,6 +6,7 @@ import json
 import signal
 import os
 from numpy import interp
+import paho.mqtt.client as mqtt
 
 class foot_switch():
     '''
@@ -150,12 +151,31 @@ class foot_switch():
         self.set_all_controls(file_dict['patches'][index]['Control'])
         return len(file_dict['patches'])
 
+def on_connect(client, userdata, message):
+    print("Client connected")
+
 def ctrl_c_handler(signal, abc):
     fs.__del__()
     fs.read_thread.join()
     GPIO.cleanup()
+    client.loop_start()
     os._exit(0)
 
+def on_message(client, userdata, message):
+    msg_json = json.loads(message.payload.decode('utf-8'))
+    with open('json/current_ctrl.json', 'r') as json_file:
+        file_dict = json.load(json_file)
+        file_dict['Control'][list(msg_json.keys())[0]] = list(msg_json.values())[0]
+    with open('json/current_ctrl.json', 'w') as json_file:
+        json.dump(file_dict, json_file, sort_keys=True, indent=4) 
+    
+
 fs = foot_switch()
+client = mqtt.Client("LocalHost")
+client.connect("localhost")
+client.subscribe('Footswitch/Control')
+client.on_message=on_message
+client.on_connect=on_connect
 signal.signal(signal.SIGINT, ctrl_c_handler)    
 signal.signal(signal.SIGTERM, ctrl_c_handler)    
+client.loop_start()
