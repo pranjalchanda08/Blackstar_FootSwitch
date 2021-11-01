@@ -41,7 +41,7 @@ class foot_switch():
                 self.alive = True
                 self.read_thread = threading.Thread(target=self.read_thread_entry, args=(1,))
                 self.read_thread.start()
-                with open('patch.json', 'r') as patch_file:
+                with open('json/patch.json', 'r') as patch_file:
                     self.file_dict = json.load(patch_file)
                     self.patch_range_human_to_device(self.file_dict['patches'])
                     ret, len = self.set_preset(preset_name=self.file_dict['patch_select'], file_dict=self.file_dict)
