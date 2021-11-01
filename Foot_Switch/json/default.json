@@ -21,7 +21,7 @@
         "resonance": 4,
         "reverb_level": 3,
         "reverb_size": 10,
-        "reverb_switch": 0,
+        "reverb_switch": 1,
         "reverb_type": 0,
         "treble": 1.2,
         "tvp_switch": 1,

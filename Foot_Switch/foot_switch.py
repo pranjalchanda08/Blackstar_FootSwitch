@@ -53,7 +53,7 @@ class foot_switch():
             if ret >= 0 :
                 self.FS_BUTTON_DICT['Patch_index'], self.FS_BUTTON_DICT['Patch_len'] = ret, len
 
-    def __del__(self):
+    def close(self):
         try:
             self.alive = False
             self.bs.disconnect()
@@ -63,6 +63,9 @@ class foot_switch():
             self.logger.info(" Device disconnected! ")
         except:
             pass
+        
+    def __del__(self):
+        self.close()
 
     def patch_range_human_to_device(self, control_dict, flag=True):
         """
@@ -211,7 +214,7 @@ def ctrl_c_handler(signal, dummy):
         Termination Signal Handler    
     """
     global MAIN_EXIT
-    fs.__del__()
+    fs.close()
     mqtt_task_q.join()
     MAIN_EXIT = True
     main_task.join()
@@ -228,6 +231,7 @@ def main_thread_entry(name):
                 file_dict['Control'][list(control_change.keys())[0]] = list(control_change.values())[0]
                 json_file.seek(0)
                 json.dump(file_dict, json_file, sort_keys=True, indent=4)
+            fs.set_all_controls(fs.patch_range_human_to_device(file_dict['Control'], flag=False))
             mqtt_task_q.task_done()
     logger.info(" Main Thread Killed!")
             
