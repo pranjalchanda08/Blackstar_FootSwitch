@@ -1,7 +1,16 @@
 {
     "patches": {
-        "default" : "json/default.json",
-        "Clean_Cool": "Patches/Clean_Cool.json",
-        "Metal_low": "Patches/Metal_low.json"
+        "Clean_Cool": {
+            "path": "Patches/Clean_Cool.json",
+            "selected": false
+        },
+        "Metal_low": {
+            "path": "Patches/Metal_low.json",
+            "selected": true
+        },
+        "default": {
+            "path": "json/default.json",
+            "selected": false
+        }
     }
 }

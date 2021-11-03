@@ -5,11 +5,10 @@ import threading, queue
 import json
 import signal
 import os
-import sys
 from numpy import interp
 import paho.mqtt.client as mqtt
 
-MAIN_EXIT = False
+THREAD_EXIT = False
 
 logging.basicConfig(level=logging.NOTSET)
 logger = logging.getLogger(" FootSwitch ")
@@ -49,7 +48,7 @@ class foot_switch():
             self.task_q = queue.Queue()
             self.read_thread = threading.Thread(target=self.foot_switch_thread_entry, args=(1,))
             self.read_thread.start()
-            ret, len = self.set_preset(preset_name='default')
+            ret, len = self.set_selected_preset()
             if ret >= 0 :
                 self.FS_BUTTON_DICT['Patch_index'], self.FS_BUTTON_DICT['Patch_len'] = ret, len
 
@@ -75,7 +74,7 @@ class foot_switch():
         """
         new_control_dict = {}
         for element in control_dict:
-            new_control_dict[element] = int(self.map_range(
+            new_control_dict[element] = int(self._map_range(
                                             control_dict[element],
                                             self.bs.control_limits_rev[element] if flag else self.bs.control_limits[element],
                                             self.bs.control_limits[element] if flag else self.bs.control_limits_rev[element]))
@@ -124,7 +123,6 @@ class foot_switch():
                 self.alive = False
         self.logger.info(" Foot Switch Thread Killed! ")
 
-
     def fs_but_callback(self, bcm_pin):
         """
             Callback for Button Events
@@ -136,9 +134,24 @@ class foot_switch():
         self.task_q.put_nowait(bcm_pin)
         
         
-    def map_range(self, val, input_range, output_range):
+    def _map_range(self, val, input_range, output_range):
+        """
+            Interpolation function
+        """
         return interp(val, input_range, output_range)
 
+    def set_limited_controls(self, update_dict):
+        """
+            Set Specefic controls using an update dictionary
+
+            update_dict - Dictionary pointer of the updated setting of a patch
+        """
+        for control in update_dict:
+            self.FS_BUTTON_DICT['Control'][control] = update_dict[control]
+            if control == "delay_time":
+                continue
+            self.bs.set_control(control, self.FS_BUTTON_DICT['Control'][control])
+            
     def set_all_controls(self, control_dict):
         """
             Set all the control params of a required patch
@@ -165,15 +178,35 @@ class foot_switch():
             key_list = list(file_patch['patches'].keys())
             if preset_name in key_list:
                 index = key_list.index(preset_name)
-                with open(os.path.join('.', file_patch['patches'][preset_name]), 'r') as json_file:
+                key_list.remove(preset_name)
+                file_patch['patches'][preset_name]['selected'] = True
+                for preset in key_list:
+                    file_patch['patches'][preset]['selected'] = False
+                    
+                with open(os.path.join('.', file_patch['patches'][preset_name]['path']), 'r') as json_file:
                     file_dict = json.load(json_file)
             else:
                 self.logger.error("Invalid Preset")
                 return -1, patch_reg_len
+            
+        with open('json/patch.json', 'w') as patch_json_file:
+            json.dump(file_patch, patch_json_file, sort_keys=True, indent=4)
+        
         self.FS_BUTTON_DICT['Control'] = self.patch_range_human_to_device(file_dict['Control'])
         self.set_all_controls(self.FS_BUTTON_DICT['Control'])
         return index, patch_reg_len
 
+    def set_selected_preset(self):
+        """
+            Set patch that is selected
+        """
+        with open('json/patch.json', 'r') as patch_json_file:
+            file_patch = json.load(patch_json_file)
+        for patch in file_patch['patches']:
+            if file_patch['patches'][patch]['selected'] is True:
+                preset_name = patch
+                return self.set_preset(preset_name=preset_name)
+            
     def set_preset_index(self, index, file_dict):
         """
             Set all the control settings according to index
@@ -188,12 +221,12 @@ class foot_switch():
             with open('json/patch.json', 'r') as patch_json_file:
                 file_patch = json.load(patch_json_file)
                 preset_name = list(file_patch['patches'].keys())[index]
-            with open(os.path.join('.', file_patch['patches'][preset_name]), 'r') as json_file:
+            with open(os.path.join('.', file_patch['patches'][preset_name]['path']), 'r') as json_file:
                 file_dict = json.load(json_file)
 
         self.FS_BUTTON_DICT['Control'] = self.patch_range_human_to_device(file_dict['Control'])
         self.set_all_controls(self.FS_BUTTON_DICT['Control'])
-        return len(file_dict['patches'])
+        return len(file_dict['patches']), preset_name
 
 def on_connect(client, userdata, flags, rc):
     """
@@ -213,26 +246,29 @@ def ctrl_c_handler(signal, dummy):
     """
         Termination Signal Handler    
     """
-    global MAIN_EXIT
+    global THREAD_EXIT
     fs.close()
     mqtt_task_q.join()
-    MAIN_EXIT = True
+    THREAD_EXIT = True
     main_task.join()
     client.loop_stop()
     os._exit(0)
 
 def main_thread_entry(name):
-    global MAIN_EXIT
-    while not MAIN_EXIT:
-        if mqtt_task_q.empty() == False:
-            control_change = mqtt_task_q.get()
-            with open('json/default.json', 'r+') as json_file:
-                file_dict = json.load(json_file)
-                file_dict['Control'][list(control_change.keys())[0]] = list(control_change.values())[0]
-                json_file.seek(0)
-                json.dump(file_dict, json_file, sort_keys=True, indent=4)
-            fs.set_all_controls(fs.patch_range_human_to_device(file_dict['Control'], flag=False))
-            mqtt_task_q.task_done()
+    global THREAD_EXIT
+    while not THREAD_EXIT:
+        try:
+            if mqtt_task_q.empty() == False:
+                control_change = mqtt_task_q.get()
+                with open('json/default.json', 'r+') as json_file:
+                    file_dict = json.load(json_file)
+                    file_dict['Control'][list(control_change.keys())[0]] = list(control_change.values())[0]
+                with open('json/default.json', 'w') as json_file:    
+                    json.dump(file_dict, json_file, sort_keys=True, indent=4)
+                fs.set_limited_controls(fs.patch_range_human_to_device(control_change, flag=True))
+                mqtt_task_q.task_done()
+        except json.decoder.JSONDecodeError as e:
+            logger.error(" Json decode error occured! " + str(e))
     logger.info(" Main Thread Killed!")
             
 try:
@@ -249,4 +285,4 @@ try:
     signal.signal(signal.SIGTERM, ctrl_c_handler)
     client.loop_start()
 except Exception as e:
-    logger.error(" Exception in main thread " + str(e))
+    logger.error(" Exception in Parent thread " + str(e))
