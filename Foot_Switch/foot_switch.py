@@ -5,6 +5,7 @@ import threading, queue
 import json
 import signal
 import os
+import time
 from numpy import interp
 import paho.mqtt.client as mqtt
 
@@ -12,7 +13,7 @@ THREAD_EXIT = False
 
 logging.basicConfig(level=logging.NOTSET)
 logger = logging.getLogger(" FootSwitch ")
-                
+
 class foot_switch():
     """
         Class defination of foot_switch instance.
@@ -29,7 +30,7 @@ class foot_switch():
         "Patch_index" : -1,
         "Patch_len": 0
     }
-    
+
     def __init__(self, logger):
         """
             Initialise Foot Switch instance
@@ -62,14 +63,14 @@ class foot_switch():
             self.logger.info(" Device disconnected! ")
         except:
             pass
-        
+
     def __del__(self):
         self.close()
 
     def patch_range_human_to_device(self, control_dict, flag=True):
         """
             Convert ranges from human readable to device acceptable range
-            
+
             flag - True for human readable to device and vice versa
         """
         new_control_dict = {}
@@ -87,33 +88,12 @@ class foot_switch():
         while self.alive:
             try:
                 if self.task_q.empty() == False:
-                    bcm_pin = self.task_q.get()                    
-                    if bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_PATCH_UP']:
-                        self.FS_BUTTON_DICT['Patch_index'] += 1
-                        self.FS_BUTTON_DICT['Patch_index'] %= self.FS_BUTTON_DICT['Patch_len']
-                        self.set_preset_index(self.FS_BUTTON_DICT['Patch_index'], self.file_dict)
-
-                    elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_PATCH_DOWN']:
-                        self.FS_BUTTON_DICT['Patch_index'] += 1
-                        self.FS_BUTTON_DICT['Patch_index'] %= self.FS_BUTTON_DICT['Patch_len']
-                        self.set_preset_index(self.FS_BUTTON_DICT['Patch_index'], self.file_dict)
-
-                    elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_MOD_TOGGLE']:
-                        self.FS_BUTTON_DICT['Control']['mod_switch'] ^= 1;
-                        self.bs.set_control('mod_switch', self.FS_BUTTON_DICT['Control']['mod_switch'])
-
-                    elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_DEL_TOGGLE']:
-                        self.FS_BUTTON_DICT['Control']['delay_switch'] ^= 1;
-                        self.bs.set_control('delay_switch', self.FS_BUTTON_DICT['Control']['delay_switch'])
-
-                    elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_REV_TOGGLE']:
-                        self.FS_BUTTON_DICT['Control']['reverb_switch'] ^= 1;
-                        self.bs.set_control('reverb_switch', self.FS_BUTTON_DICT['Control']['reverb_switch'])                
-                    
+                    request = self.task_q.get()
+                    self._foot_switch_actions(request=request)
                     self.task_q.task_done()
-                
             except Exception as e:
                 self.logger.error(" Device Error " + str(e))
+
             try:
                 self.FS_BUTTON_DICT['Control'].update(self.bs.read_data())
                 self.logger.debug(self.FS_BUTTON_DICT['Control'])
@@ -123,17 +103,70 @@ class foot_switch():
                 self.alive = False
         self.logger.info(" Foot Switch Thread Killed! ")
 
+    def _millis():
+        return time.time() * 1000
+
     def fs_but_callback(self, bcm_pin):
         """
             Callback for Button Events
-            
+
             bcm_pin     Pin number of the event occur
         """
         if GPIO.input(bcm_pin):
-            return
-        self.task_q.put_nowait(bcm_pin)
-        
-        
+            ms_release = self._millis()
+            request = {
+                "bcm_pin" : bcm_pin,
+                "long_press" : False
+                }
+            if ms_release - self.ms_start > 2000:
+                request['long_press'] = True
+            self.task_q.put_nowait(request)
+
+        elif not GPIO.input(bcm_pin):
+            self.ms_start = self._millis()
+
+    def _foot_switch_actions(self, request):
+        bcm_pin = request['bcm_pin']
+        if bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_PATCH_UP']:
+            self.FS_BUTTON_DICT['Patch_index'] += 1
+            self.FS_BUTTON_DICT['Patch_index'] %= self.FS_BUTTON_DICT['Patch_len']
+            self.set_preset_index(self.FS_BUTTON_DICT['Patch_index'], self.file_dict)
+
+        elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_PATCH_DOWN']:
+            self.FS_BUTTON_DICT['Patch_index'] += 1
+            self.FS_BUTTON_DICT['Patch_index'] %= self.FS_BUTTON_DICT['Patch_len']
+            self.set_preset_index(self.FS_BUTTON_DICT['Patch_index'], self.file_dict)
+
+        elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_MOD_TOGGLE']:
+            if request['long_press']:
+                control_str = 'mod_type'
+                self.FS_BUTTON_DICT['Control'][control_str] += 1
+                self.FS_BUTTON_DICT['Control'][control_str] %= self.bs.control_limits['mod_type'][1]
+            else:
+                control_str = 'mod_switch'
+                self.FS_BUTTON_DICT['Control'][control_str] ^= 1;
+            self.bs.set_control(control_str, self.FS_BUTTON_DICT['Control']['mod_switch'])
+
+        elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_DEL_TOGGLE']:
+            if request['long_press']:
+                control_str = 'delay_type'
+                self.FS_BUTTON_DICT['Control'][control_str] += 1
+                self.FS_BUTTON_DICT['Control'][control_str] %= self.bs.control_limits['mod_type'][1]
+            else:
+                control_str = 'delay_switch'
+                self.FS_BUTTON_DICT['Control'][control_str] ^= 1;
+            self.bs.set_control(control_str, self.FS_BUTTON_DICT['Control']['mod_switch'])
+
+        elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_REV_TOGGLE']:
+            if request['long_press']:
+                control_str = 'reverb_type'
+                self.FS_BUTTON_DICT['Control'][control_str] += 1
+                self.FS_BUTTON_DICT['Control'][control_str] %= self.bs.control_limits['mod_type'][1]
+            else:
+                control_str = 'reverb_switch'
+                self.FS_BUTTON_DICT['Control'][control_str] ^= 1;
+            self.bs.set_control(control_str, self.FS_BUTTON_DICT['Control']['mod_switch'])
+
     def _map_range(self, val, input_range, output_range):
         """
             Interpolation function
@@ -151,7 +184,7 @@ class foot_switch():
             if control == "delay_time":
                 continue
             self.bs.set_control(control, self.FS_BUTTON_DICT['Control'][control])
-            
+
     def set_all_controls(self, control_dict):
         """
             Set all the control params of a required patch
@@ -182,16 +215,16 @@ class foot_switch():
                 file_patch['patches'][preset_name]['selected'] = True
                 for preset in key_list:
                     file_patch['patches'][preset]['selected'] = False
-                    
+
                 with open(os.path.join('.', file_patch['patches'][preset_name]['path']), 'r') as json_file:
                     file_dict = json.load(json_file)
             else:
                 self.logger.error("Invalid Preset")
                 return -1, patch_reg_len
-            
+
         with open('json/patch.json', 'w') as patch_json_file:
             json.dump(file_patch, patch_json_file, sort_keys=True, indent=4)
-        
+
         self.FS_BUTTON_DICT['Control'] = self.patch_range_human_to_device(file_dict['Control'])
         self.set_all_controls(self.FS_BUTTON_DICT['Control'])
         return index, patch_reg_len
@@ -206,7 +239,7 @@ class foot_switch():
             if file_patch['patches'][patch]['selected'] is True:
                 preset_name = patch
                 return self.set_preset(preset_name=preset_name)
-            
+
     def set_preset_index(self, index, file_dict):
         """
             Set all the control settings according to index
@@ -233,7 +266,7 @@ def on_connect(client, userdata, flags, rc):
         MQTT on_connect callback
     """
     logger.info(" MQTT Client connected ")
-    
+
 def on_message(client, userdata, message):
     """
         MQTT on_message callback
@@ -244,7 +277,7 @@ def on_message(client, userdata, message):
 
 def ctrl_c_handler(signal, dummy):
     """
-        Termination Signal Handler    
+        Termination Signal Handler
     """
     global THREAD_EXIT
     fs.close()
@@ -263,14 +296,14 @@ def main_thread_entry(name):
                 with open('json/default.json', 'r+') as json_file:
                     file_dict = json.load(json_file)
                     file_dict['Control'][list(control_change.keys())[0]] = list(control_change.values())[0]
-                with open('json/default.json', 'w') as json_file:    
+                with open('json/default.json', 'w') as json_file:
                     json.dump(file_dict, json_file, sort_keys=True, indent=4)
                 fs.set_limited_controls(fs.patch_range_human_to_device(control_change, flag=True))
                 mqtt_task_q.task_done()
         except json.decoder.JSONDecodeError as e:
             logger.error(" Json decode error occured! " + str(e))
     logger.info(" Main Thread Killed!")
-            
+
 try:
     fs = foot_switch(logger=logger)
     mqtt_task_q = queue.Queue()
