@@ -968,7 +968,14 @@ class BlackstarIDAmp(object):
         ret = self.device.read(0x81, 64)
         logger.debug('Preset settings for preset {0}\n'.format(preset)
                      + self._format_data(ret))
-
+    
+    def initialise(self):
+        if self.connected is False:
+            self.connect()
+            self.drain()
+            self.startup()
+        return self.connected
+    
 if __name__ == '__main__':
     import logging
     import sys
