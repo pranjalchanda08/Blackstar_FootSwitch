@@ -11,3 +11,17 @@ $ sudo setup.py install
 $ cd ../Adafruit_Python_SSD1306
 $ sudo setup.py install
 ```
+
+## Setup default Audio PCM channel
+
+```sh
+$ aplay -l
+```
+- List the Card number and device ID
+
+```sh
+$ sudo nano /usr/share/alsa/alsa.conf
+```
+
+- Replace `defaults.pcm.card {}` and `defaults.pcm.device {}` as required
+
