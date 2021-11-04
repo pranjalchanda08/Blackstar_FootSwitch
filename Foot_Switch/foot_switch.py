@@ -7,6 +7,7 @@ import signal
 import os
 import time
 from numpy import interp
+from Oled import OLED
 import paho.mqtt.client as mqtt
 
 THREAD_EXIT = False
@@ -36,15 +37,21 @@ class foot_switch():
             Initialise Foot Switch instance
         """
         GPIO.setmode(GPIO.BCM)
+        
         for button in list(self.FS_BUTTON_DICT['Pins'].values()):
             GPIO.setup(button, GPIO.IN, pull_up_down = GPIO.PUD_UP)
-            GPIO.add_event_detect(button, GPIO.BOTH, callback = self.fs_but_callback, bouncetime=100)
+            GPIO.add_event_detect(button, GPIO.BOTH, callback = self.fs_but_callback, bouncetime=500)
+        
         self.logger = logger
+        
+        try:
+            self.oled = OLED()
+        except Exception as e:
+            self.logger.error(" OLED: " + str(e))
+            
         self.bs = BlackstarIDAmp()
-        if self.bs.connected is False:
-            self.bs.connect()
-            self.bs.drain()
-            self.bs.startup()
+        connected = self.bs.initialise()
+        if connected:
             self.alive = True
             self.task_q = queue.Queue()
             self.read_thread = threading.Thread(target=self.foot_switch_thread_entry, args=(1,))
@@ -293,10 +300,11 @@ def main_thread_entry(name):
         try:
             if mqtt_task_q.empty() == False:
                 control_change = mqtt_task_q.get()
-                with open('json/default.json', 'r+') as json_file:
+                json_file_name = 'json/default.json'
+                with open(json_file_name, 'r+') as json_file:
                     file_dict = json.load(json_file)
                     file_dict['Control'][list(control_change.keys())[0]] = list(control_change.values())[0]
-                with open('json/default.json', 'w') as json_file:
+                with open(json_file_name, 'w') as json_file:
                     json.dump(file_dict, json_file, sort_keys=True, indent=4)
                 fs.set_limited_controls(fs.patch_range_human_to_device(control_change, flag=True))
                 mqtt_task_q.task_done()

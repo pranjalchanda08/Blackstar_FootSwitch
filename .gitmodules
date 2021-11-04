@@ -2,3 +2,6 @@
 	path = pyusb
 	url = https://github.com/roberthartung/pyusb.git
 	branch = hotplug
+[submodule "Adafruit_Python_SSD1306"]
+	path = Adafruit_Python_SSD1306
+	url = https://github.com/adafruit/Adafruit_Python_SSD1306.git
