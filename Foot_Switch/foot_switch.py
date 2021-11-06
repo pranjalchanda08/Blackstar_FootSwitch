@@ -103,11 +103,8 @@ class foot_switch():
         """
             Thread Entry for foot_switch thread
         """
-        # previous_time = 0
-        # current_time = self._millis()
         json_file_name = 'json/default.json'
         while self.alive:
-            # if current_time - previous_time > 1000:
             if not self.FS_BUTTON_DICT['Control_save'] == {}:
                 with open(json_file_name, 'r') as json_file:
                     file_dict = json.load(json_file)
@@ -323,14 +320,7 @@ def main_thread_entry(name):
         try:
             if mqtt_task_q.empty() == False:
                 control_change = mqtt_task_q.get()
-                # json_file_name = 'json/default.json'
                 fs.FS_BUTTON_DICT['Control_save'][list(control_change.keys())[0]] = list(control_change.values())[0]
-
-                # with open(json_file_name, 'r') as json_file:
-                #     file_dict = json.load(json_file)
-                #     file_dict['Control'][list(control_change.keys())[0]] = list(control_change.values())[0]
-                # with open(json_file_name, 'w') as json_file:
-                #     json.dump(file_dict, json_file, sort_keys=True, indent=4)
                 fs.set_limited_controls(fs.patch_range_human_to_device(control_change, flag=True))
                 mqtt_task_q.task_done()
         except json.decoder.JSONDecodeError as e:
