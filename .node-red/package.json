@@ -1,0 +1,12 @@
+{
+    "name": "node-red-project",
+    "description": "A Node-RED Project",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "cn-dashboard-nodes": "0.0.2",
+        "node-red-contrib-python3-function": "^0.0.4",
+        "node-red-dashboard": "~3.1.0",
+        "node-red-node-daemon": "~0.3.0"
+    }
+}

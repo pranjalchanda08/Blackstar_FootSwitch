@@ -19,6 +19,7 @@ import usb.core
 import usb.util
 import usb.hotplug
 import logging
+import subprocess
 import xml.etree.ElementTree as et
 
 # Set up logging and create a null handler in case the application doesn't
@@ -453,6 +454,7 @@ class BlackstarIDAmp(object):
                 self.disconnect()
         except:
             pass
+            
     def disconnect(self):
         '''Disconnect from the amplifer and release all resources. If we're
         already disconnected, this method is a no-op
@@ -560,7 +562,7 @@ class BlackstarIDAmp(object):
 
         ret = self._send_data(data)
 
-        logger.debug('Set control: {0} -> {1}'.format(control, value))
+        logger.debug(' {0} -> {1}'.format(control, value))
 
         return ret
 
@@ -969,9 +971,23 @@ class BlackstarIDAmp(object):
         logger.debug('Preset settings for preset {0}\n'.format(preset)
                      + self._format_data(ret))
     
+    def reset_usb(self):
+        retry = 3
+        while retry:
+            pipe = subprocess.run(['usbreset', '"ID:Core Amplifier"'])
+            if 'failed' in pipe.stdout.decode():
+                retry -=1
+            else:
+                break
+        if not retry:
+            raise USBError("Reset Error")
+
     def initialise(self):
-        if self.connected is False:
-            self.connect()
+        while self.connected is False:
+            try:
+                self.connect()
+            except:
+                self.reset_usb()
             self.drain()
             self.startup()
         return self.connected
