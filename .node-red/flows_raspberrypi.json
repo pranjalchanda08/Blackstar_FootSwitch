@@ -1,1 +1,1401 @@
-[{"id":"a41570b2.699908","type":"tab","label":"Flow 1","disabled":true,"info":""},{"id":"6a1fd15f.c993f8","type":"tab","label":"Flow 1","disabled":false,"info":""},{"id":"57fc9f5d.a197e8","type":"ui_group","name":"Master","tab":"a2573943.0b2e18","order":1,"disp":true,"width":"8","collapse":false,"className":""},{"id":"2401f0c0.f12538","type":"ui_group","name":"Tone","tab":"a2573943.0b2e18","order":2,"disp":true,"width":8,"collapse":false,"className":""},{"id":"d6bba592.96c43","type":"ui_group","name":"Effects","tab":"a2573943.0b2e18","order":3,"disp":true,"width":8,"collapse":false,"className":""},{"id":"a2573943.0b2e18","type":"ui_tab","name":"Home","icon":"dashboard","disabled":false,"hidden":false},{"id":"a23ba421.0532e","type":"ui_base","theme":{"name":"theme-dark","lightTheme":{"default":"#0094CE","baseColor":"#75507b","baseFont":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif","edited":false,"reset":false},"darkTheme":{"default":"#097479","baseColor":"#3465a4","baseFont":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif","edited":true,"reset":false},"customTheme":{"name":"Untitled Theme 1","default":"#4B7930","baseColor":"#4B7930","baseFont":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"},"themeState":{"base-color":{"default":"#097479","value":"#3465a4","edited":true},"page-titlebar-backgroundColor":{"value":"#3465a4","edited":false},"page-backgroundColor":{"value":"#111111","edited":false},"page-sidebar-backgroundColor":{"value":"#333333","edited":false},"group-textColor":{"value":"#5a8bcb","edited":false},"group-borderColor":{"value":"#555555","edited":false},"group-backgroundColor":{"value":"#333333","edited":false},"widget-textColor":{"value":"#eeeeee","edited":false},"widget-backgroundColor":{"value":"#3465a4","edited":false},"widget-borderColor":{"value":"#333333","edited":false},"base-font":{"value":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"}},"angularTheme":{"primary":"indigo","accents":"blue","warn":"red","background":"grey","palette":"light"}},"site":{"name":"Node-RED Dashboard","hideToolbar":"false","allowSwipe":"false","lockMenu":"false","allowTempTheme":"true","dateFormat":"DD/MM/YYYY","sizes":{"sx":48,"sy":48,"gx":6,"gy":6,"cx":6,"cy":6,"px":0,"py":0}}},{"id":"fb8d98d8.cea8e","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"57fc9f5d.a197e8","order":5,"width":2,"height":1},{"id":"7b53c3fe.bdeef4","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"57fc9f5d.a197e8","order":7,"width":2,"height":1},{"id":"dce4a60.cf4d0d8","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"57fc9f5d.a197e8","order":8,"width":2,"height":1},{"id":"8f3fbb6e.f5d27","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"57fc9f5d.a197e8","order":10,"width":2,"height":1},{"id":"3475038e.811b1c","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"57fc9f5d.a197e8","order":11,"width":2,"height":1},{"id":"5e80aa80.1207f4","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"57fc9f5d.a197e8","order":12,"width":2,"height":1},{"id":"5ee42db3.1ac6ec","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"57fc9f5d.a197e8","order":13,"width":2,"height":1},{"id":"c3e9e61f.cf12b","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"57fc9f5d.a197e8","order":14,"width":2,"height":1},{"id":"c93f3c8.dc69a4","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"57fc9f5d.a197e8","order":15,"width":2,"height":1},{"id":"15344fb0.1de1d","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"57fc9f5d.a197e8","order":16,"width":2,"height":1},{"id":"15a1af4e.be1679","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"d6bba592.96c43","order":2,"width":1,"height":1},{"id":"d63a8187.876458","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"d6bba592.96c43","order":5,"width":1,"height":1},{"id":"c8ac56d2.aa45e8","type":"ui_spacer","z":"6a1fd15f.c993f8","name":"spacer","group":"d6bba592.96c43","order":8,"width":1,"height":1},{"id":"63b74206.85cbc4","type":"mqtt-broker","name":"Mosquitto","broker":"localhost","port":"1883","clientid":"","usetls":false,"protocolVersion":"4","keepalive":"60","cleansession":true,"birthTopic":"","birthQos":"0","birthPayload":"","birthMsg":{},"closeTopic":"","closeQos":"2","closePayload":"","closeMsg":{},"willTopic":"Footswitch/will","willQos":"2","willPayload":"kill","willMsg":{},"sessionExpiry":""},{"id":"a1d9c621.746738","type":"ui_group","name":"Patch","tab":"a2573943.0b2e18","order":4,"disp":true,"width":"6","collapse":false,"className":""},{"id":"69d0d5e7.b99b04","type":"inject","z":"6a1fd15f.c993f8","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"0.5","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"","payloadType":"date","x":70,"y":320,"wires":[["56f3151a.1d7a24"]]},{"id":"3bb880ab.17eed8","type":"debug","z":"6a1fd15f.c993f8","name":"","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","statusVal":"","statusType":"auto","x":1470,"y":360,"wires":[]},{"id":"25712ac3.121d5e","type":"ui_switch","z":"6a1fd15f.c993f8","name":"","label":"MOD","tooltip":"","group":"d6bba592.96c43","order":1,"width":4,"height":1,"passthru":false,"decouple":"true","topic":"mod_switch","topicType":"str","style":"","onvalue":"true","onvalueType":"bool","onicon":"","oncolor":"","offvalue":"false","offvalueType":"bool","officon":"","offcolor":"","animate":true,"className":"","x":730,"y":920,"wires":[["5ee3146a.832cdc"]]},{"id":"7f3811fc.24eb98","type":"ui_switch","z":"6a1fd15f.c993f8","name":"","label":"Delay","tooltip":"","group":"d6bba592.96c43","order":4,"width":4,"height":1,"passthru":false,"decouple":"true","topic":"delay_switch","topicType":"str","style":"","onvalue":"true","onvalueType":"bool","onicon":"","oncolor":"","offvalue":"false","offvalueType":"bool","officon":"","offcolor":"","animate":true,"className":"","x":730,"y":980,"wires":[["2664d4a0.5e00f4"]]},{"id":"347ceda7.54c912","type":"ui_switch","z":"6a1fd15f.c993f8","name":"","label":"Reverb","tooltip":"","group":"d6bba592.96c43","order":7,"width":4,"height":1,"passthru":false,"decouple":"true","topic":"reverb_switch","topicType":"str","style":"","onvalue":"true","onvalueType":"bool","onicon":"","oncolor":"","offvalue":"false","offvalueType":"bool","officon":"","offcolor":"","animate":true,"className":"","x":740,"y":1040,"wires":[["a02b1ae2.c72698"]]},{"id":"64019af1.59ff8c","type":"ui_slider","z":"6a1fd15f.c993f8","name":"Gain","label":"","tooltip":"","group":"57fc9f5d.a197e8","order":2,"width":4,"height":1,"passthru":true,"outs":"all","topic":"gain","topicType":"str","min":0,"max":10,"step":"0.1","className":"","x":730,"y":320,"wires":[["3df5917a.351e26","31bf36d3.4cf012"]]},{"id":"2af11b1a.c09dec","type":"ui_slider","z":"6a1fd15f.c993f8","name":"Volume","label":"","tooltip":"","group":"57fc9f5d.a197e8","order":1,"width":4,"height":1,"passthru":true,"outs":"all","topic":"volume","topicType":"str","min":0,"max":10,"step":"0.1","className":"","x":740,"y":380,"wires":[["42f65612.213dc","31bf36d3.4cf012"]]},{"id":"93d56d84.6966e8","type":"ui_slider","z":"6a1fd15f.c993f8","name":"ISF","label":"","tooltip":"","group":"2401f0c0.f12538","order":1,"width":4,"height":1,"passthru":true,"outs":"all","topic":"isf","topicType":"str","min":0,"max":10,"step":"0.1","className":"","x":730,"y":440,"wires":[["6775f758.25b1d","31bf36d3.4cf012"]]},{"id":"b58e03f0.043c1","type":"ui_slider","z":"6a1fd15f.c993f8","name":"Bass","label":"","tooltip":"","group":"2401f0c0.f12538","order":2,"width":4,"height":1,"passthru":true,"outs":"all","topic":"bass","topicType":"str","min":0,"max":10,"step":"0.1","className":"","x":730,"y":500,"wires":[["b6cfac9b.6df6c8","31bf36d3.4cf012"]]},{"id":"8b37bece.4acc6","type":"ui_slider","z":"6a1fd15f.c993f8","name":"voice","label":"","tooltip":"","group":"57fc9f5d.a197e8","order":6,"width":4,"height":1,"passthru":true,"outs":"all","topic":"voice","topicType":"str","min":0,"max":"5","step":"1","className":"","x":730,"y":860,"wires":[["31bf36d3.4cf012","5af55022.5b8e5"]]},{"id":"a0fa69c9.997d58","type":"ui_slider","z":"6a1fd15f.c993f8","name":"middle","label":"","tooltip":"","group":"2401f0c0.f12538","order":5,"width":4,"height":1,"passthru":true,"outs":"all","topic":"middle","topicType":"str","min":0,"max":10,"step":"0.1","className":"","x":730,"y":560,"wires":[["77b033f0.6cb3dc","31bf36d3.4cf012"]]},{"id":"fa212efd.da34","type":"ui_slider","z":"6a1fd15f.c993f8","name":"treble","label":"","tooltip":"","group":"2401f0c0.f12538","order":6,"width":4,"height":1,"passthru":true,"outs":"all","topic":"treble","topicType":"str","min":0,"max":10,"step":"0.1","className":"","x":730,"y":620,"wires":[["ca722c6d.c933b8","31bf36d3.4cf012"]]},{"id":"3df5917a.351e26","type":"ui_gauge","z":"6a1fd15f.c993f8","name":"Gain","group":"57fc9f5d.a197e8","order":4,"width":4,"height":4,"gtype":"donut","title":"Gain","label":"","format":"{{value}}","min":0,"max":10,"colors":["#00b500","#edd400","#cc0000"],"seg1":"","seg2":"","className":"","x":930,"y":320,"wires":[]},{"id":"42f65612.213dc","type":"ui_gauge","z":"6a1fd15f.c993f8","name":"volume","group":"57fc9f5d.a197e8","order":3,"width":4,"height":4,"gtype":"donut","title":"Volume","label":"","format":"{{value}}","min":0,"max":10,"colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","className":"","x":940,"y":380,"wires":[]},{"id":"6775f758.25b1d","type":"ui_gauge","z":"6a1fd15f.c993f8","name":"isf","group":"2401f0c0.f12538","order":3,"width":4,"height":4,"gtype":"donut","title":"ISF","label":"","format":"{{value}}","min":0,"max":10,"colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","className":"","x":930,"y":440,"wires":[]},{"id":"b6cfac9b.6df6c8","type":"ui_gauge","z":"6a1fd15f.c993f8","name":"bass","group":"2401f0c0.f12538","order":4,"width":4,"height":4,"gtype":"donut","title":"Bass","label":"","format":"{{value}}","min":0,"max":10,"colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","className":"","x":930,"y":500,"wires":[]},{"id":"6d84166e.7d4c18","type":"ui_gauge","z":"6a1fd15f.c993f8","name":"voice","group":"57fc9f5d.a197e8","order":9,"width":4,"height":4,"gtype":"donut","title":"Voice","label":"{{topic}}","format":"{{payload}}","min":0,"max":"5","colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","className":"","x":870,"y":860,"wires":[]},{"id":"77b033f0.6cb3dc","type":"ui_gauge","z":"6a1fd15f.c993f8","name":"middle","group":"2401f0c0.f12538","order":7,"width":4,"height":4,"gtype":"donut","title":"Mids","label":"","format":"{{value}}","min":0,"max":10,"colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","className":"","x":930,"y":560,"wires":[]},{"id":"ca722c6d.c933b8","type":"ui_gauge","z":"6a1fd15f.c993f8","name":"treble","group":"2401f0c0.f12538","order":8,"width":4,"height":4,"gtype":"donut","title":"Trebble","label":"","format":"{{value}}","min":0,"max":10,"colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","className":"","x":930,"y":620,"wires":[]},{"id":"6ddbc5cb.0bb264","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter Gain","func":"gain = msg['payload']['Control']['gain']\nmsg['payload'] = gain\nreturn msg","outputs":1,"x":530,"y":320,"wires":[["64019af1.59ff8c"]]},{"id":"31bf36d3.4cf012","type":"python3-function","z":"6a1fd15f.c993f8","name":"Dump Json","func":"y = {} \ny[msg['topic']] = msg['payload']\n    \nmsg['payload'] = y \nreturn msg","outputs":1,"x":1250,"y":320,"wires":[["b4de737e.07ded8","3bb880ab.17eed8"]]},{"id":"d2098514.f38ae8","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter Vol","func":"vol = msg['payload']['Control']['volume']\nmsg['payload'] = vol\nreturn msg","outputs":1,"x":520,"y":380,"wires":[["2af11b1a.c09dec"]]},{"id":"f6267513.30335","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter ISF","func":"isf = msg['payload']['Control']['isf']\nmsg['payload'] = isf\nreturn msg","outputs":1,"x":520,"y":440,"wires":[["93d56d84.6966e8"]]},{"id":"d380a081.16181","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter Bass","func":"bass = msg['payload']['Control']['bass']\nmsg['payload'] = bass\nreturn msg","outputs":1,"x":530,"y":500,"wires":[["b58e03f0.043c1"]]},{"id":"f8396ac1.f8ca6","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter Voice","func":"voice = msg['payload']['Control']['voice']\nmsg['payload'] = voice\nreturn msg","outputs":1,"x":530,"y":860,"wires":[["8b37bece.4acc6"]]},{"id":"42ba86ff.8a0598","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter Mids","func":"middle = msg['payload']['Control']['middle']\nmsg['payload'] = middle\nreturn msg","outputs":1,"x":530,"y":560,"wires":[["a0fa69c9.997d58"]]},{"id":"6d489027.4c77d8","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter Treble","func":"treble = msg['payload']['Control']['treble']\nmsg['payload'] = treble\nreturn msg","outputs":1,"x":530,"y":620,"wires":[["fa212efd.da34"]]},{"id":"6a96caef.f4b584","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter mod_switch","func":"mod_switch = bool(msg['payload']['Control']['mod_switch'])\nmsg['payload'] = mod_switch\nreturn msg","outputs":1,"x":550,"y":920,"wires":[["25712ac3.121d5e"]]},{"id":"2a370748.43dbb","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter delay_switch","func":"delay_switch = bool(msg['payload']['Control']['delay_switch'])\nmsg['payload'] = delay_switch\nreturn msg","outputs":1,"x":550,"y":980,"wires":[["7f3811fc.24eb98"]]},{"id":"5af55022.5b8e5","type":"python3-function","z":"6a1fd15f.c993f8","name":"","func":"voice_dict={\n    0:\"Clean Warm\",\n    1:\"Clean Bright\",\n    2:\"Crunch\",\n    3:\"Super Crunch\",\n    4:\"OD1\",\n    5:\"OD2\",\n}\n\nmsg['topic']  = voice_dict[msg['payload']]\nreturn msg","outputs":1,"x":1040,"y":860,"wires":[["6d84166e.7d4c18"]]},{"id":"3a956eac.9d9d0a","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter reverb_switch","func":"reverb_switch = bool(msg['payload']['Control']['reverb_switch'])\nmsg['payload'] = reverb_switch\nreturn msg","outputs":1,"x":550,"y":1040,"wires":[["347ceda7.54c912"]]},{"id":"56f3151a.1d7a24","type":"python3-function","z":"6a1fd15f.c993f8","name":"Read Json control file","func":"import json\n\nfile = \"/home/pi/Blackstar_FootSwitch/Foot_Switch/json/default.json\"\n\nfile_desc = open(file, 'r')\ndict = json.load(file_desc)\nprint(dict)\nmsg['payload'] = dict\nfile_desc.close()\nreturn msg","outputs":1,"x":280,"y":320,"wires":[["6ddbc5cb.0bb264","d2098514.f38ae8","d380a081.16181","f8396ac1.f8ca6","42ba86ff.8a0598","6d489027.4c77d8","6a96caef.f4b584","2a370748.43dbb","3a956eac.9d9d0a","dcb62eb2.93ffa","19f16bbc.819114","58a34549.89d6ec","f6267513.30335"]]},{"id":"7e8ceaf.0f30894","type":"python3-function","z":"6a1fd15f.c993f8","name":"","func":"msg['payload']  = int(msg['payload'])\nreturn msg","outputs":1,"x":1040,"y":920,"wires":[["31bf36d3.4cf012"]]},{"id":"857362b.417312","type":"python3-function","z":"6a1fd15f.c993f8","name":"","func":"msg['payload']  = int(msg['payload'])\nreturn msg","outputs":1,"x":1040,"y":980,"wires":[["31bf36d3.4cf012"]]},{"id":"d6a33968.60b0b8","type":"python3-function","z":"6a1fd15f.c993f8","name":"","func":"msg['payload'] = int(msg['payload'])\nreturn msg","outputs":1,"x":1040,"y":1040,"wires":[["31bf36d3.4cf012"]]},{"id":"5ee3146a.832cdc","type":"delay","z":"6a1fd15f.c993f8","name":"","pauseType":"delay","timeout":"0.1","timeoutUnits":"seconds","rate":"1","nbRateUnits":"1","rateUnits":"second","randomFirst":"1","randomLast":"5","randomUnits":"seconds","drop":false,"x":870,"y":920,"wires":[["7e8ceaf.0f30894"]]},{"id":"2664d4a0.5e00f4","type":"delay","z":"6a1fd15f.c993f8","name":"","pauseType":"delay","timeout":"0.2","timeoutUnits":"seconds","rate":"1","nbRateUnits":"1","rateUnits":"second","randomFirst":"1","randomLast":"5","randomUnits":"seconds","drop":false,"x":870,"y":980,"wires":[["857362b.417312"]]},{"id":"a02b1ae2.c72698","type":"delay","z":"6a1fd15f.c993f8","name":"","pauseType":"delay","timeout":"0.3","timeoutUnits":"seconds","rate":"1","nbRateUnits":"1","rateUnits":"second","randomFirst":"1","randomLast":"5","randomUnits":"seconds","drop":false,"x":870,"y":1040,"wires":[["d6a33968.60b0b8"]]},{"id":"41d86bb1.edcf14","type":"ui_dropdown","z":"6a1fd15f.c993f8","name":"Mod","label":"","tooltip":"","place":"Select option","group":"d6bba592.96c43","order":3,"width":3,"height":1,"passthru":true,"multiple":false,"options":[{"label":"Phaser","value":0,"type":"num"},{"label":"Chorus","value":1,"type":"num"},{"label":"Envelope","value":2,"type":"num"},{"label":"Tremolo","value":3,"type":"num"}],"payload":"","topic":"mod_type","topicType":"str","className":"","x":730,"y":680,"wires":[["31bf36d3.4cf012"]]},{"id":"5cd7d25.ddd672c","type":"ui_dropdown","z":"6a1fd15f.c993f8","name":"Delay","label":"","tooltip":"","place":"Select option","group":"d6bba592.96c43","order":6,"width":3,"height":1,"passthru":true,"multiple":false,"options":[{"label":"Linear","value":0,"type":"num"},{"label":"Analog","value":1,"type":"num"},{"label":"Tape","value":2,"type":"num"},{"label":"Multi","value":3,"type":"num"}],"payload":"","topic":"mod_type","topicType":"str","className":"","x":730,"y":740,"wires":[["31bf36d3.4cf012"]]},{"id":"c4cbcf8b.13a21","type":"ui_dropdown","z":"6a1fd15f.c993f8","name":"Reverb","label":"","tooltip":"","place":"Select option","group":"d6bba592.96c43","order":9,"width":3,"height":1,"passthru":true,"multiple":false,"options":[{"label":"Room","value":0,"type":"num"},{"label":"Hall","value":1,"type":"num"},{"label":"Spring","value":2,"type":"num"},{"label":"Plate","value":3,"type":"num"}],"payload":"","topic":"mod_type","topicType":"str","className":"","x":740,"y":800,"wires":[["31bf36d3.4cf012"]]},{"id":"dcb62eb2.93ffa","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter reverb_type ","func":"reverb_type = bool(msg['payload']['Control']['reverb_type'])\nmsg['payload'] = reverb_type\nreturn msg","outputs":1,"x":550,"y":800,"wires":[[]]},{"id":"19f16bbc.819114","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter delay_type","func":"delay_type = bool(msg['payload']['Control']['delay_type'])\nmsg['payload'] = delay_type\nreturn msg","outputs":1,"x":540,"y":740,"wires":[[]]},{"id":"58a34549.89d6ec","type":"python3-function","z":"6a1fd15f.c993f8","name":"Filter mod_type","func":"mod_type = bool(msg['payload']['Control']['mod_type'])\nmsg['payload'] = mod_type\nreturn msg","outputs":1,"x":540,"y":680,"wires":[[]]},{"id":"b4de737e.07ded8","type":"mqtt out","z":"6a1fd15f.c993f8","name":"Control MQTT Publish","topic":"Footswitch/Control","qos":"1","retain":"","respTopic":"","contentType":"","userProps":"","correl":"","expiry":"","broker":"63b74206.85cbc4","x":1520,"y":320,"wires":[]},{"id":"7c22e1c3.86ced8","type":"inject","z":"6a1fd15f.c993f8","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":true,"onceDelay":0.1,"topic":"","payload":"","payloadType":"date","x":70,"y":360,"wires":[[]]},{"id":"2bd55391.053aa4","type":"python3-function","z":"6a1fd15f.c993f8","name":"","func":"import os \nimport subprocess\n\nCWD= '/home/pi/Blackstar_FootSwitch/Foot_Switch'  \nprocess = subprocess.Popen(['python3', 'foot_switch.py'],\n                    cwd=CWD,\n                    stdout=subprocess.PIPE, \n                    stderr=subprocess.PIPE)\n\n\nreturn msg","outputs":1,"x":260,"y":400,"wires":[[]]},{"id":"768258fa.6ef61","type":"ui_button","z":"6a1fd15f.c993f8","name":"","group":"a1d9c621.746738","order":16,"width":0,"height":0,"passthru":false,"label":"Patch Up","tooltip":"","color":"","bgcolor":"","className":"","icon":"","payload":"true","payloadType":"bool","topic":"topic","topicType":"msg","x":190,"y":620,"wires":[[]]},{"id":"5dff66cd.b630b","type":"ui_button","z":"6a1fd15f.c993f8","name":"","group":"a1d9c621.746738","order":16,"width":0,"height":0,"passthru":false,"label":"Patch Down","tooltip":"","color":"","bgcolor":"","className":"","icon":"","payload":"true","payloadType":"bool","topic":"topic","topicType":"msg","x":190,"y":700,"wires":[[]]},{"id":"ed7763af.ef6308","type":"ui_text","z":"6a1fd15f.c993f8","group":"a1d9c621.746738","order":2,"width":0,"height":0,"name":"","label":"Patch Selected","format":"{{msg.payload}}","layout":"row-center","className":"","x":200,"y":780,"wires":[]}]
+[
+    {
+        "id": "6a1fd15f.c993f8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "69d0d5e7.b99b04",
+        "type": "inject",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 70,
+        "y": 320,
+        "wires": [
+            [
+                "56f3151a.1d7a24"
+            ]
+        ]
+    },
+    {
+        "id": "3bb880ab.17eed8",
+        "type": "debug",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1470,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "25712ac3.121d5e",
+        "type": "ui_switch",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "label": "MOD",
+        "tooltip": "",
+        "group": "d6bba592.96c43",
+        "order": 1,
+        "width": 4,
+        "height": 1,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "mod_switch",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": true,
+        "className": "",
+        "x": 730,
+        "y": 920,
+        "wires": [
+            [
+                "5ee3146a.832cdc"
+            ]
+        ]
+    },
+    {
+        "id": "7f3811fc.24eb98",
+        "type": "ui_switch",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "label": "Delay",
+        "tooltip": "",
+        "group": "d6bba592.96c43",
+        "order": 4,
+        "width": 4,
+        "height": 1,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "delay_switch",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": true,
+        "className": "",
+        "x": 730,
+        "y": 980,
+        "wires": [
+            [
+                "2664d4a0.5e00f4"
+            ]
+        ]
+    },
+    {
+        "id": "347ceda7.54c912",
+        "type": "ui_switch",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "label": "Reverb",
+        "tooltip": "",
+        "group": "d6bba592.96c43",
+        "order": 7,
+        "width": 4,
+        "height": 1,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "reverb_switch",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": true,
+        "className": "",
+        "x": 740,
+        "y": 1040,
+        "wires": [
+            [
+                "a02b1ae2.c72698"
+            ]
+        ]
+    },
+    {
+        "id": "64019af1.59ff8c",
+        "type": "ui_slider",
+        "z": "6a1fd15f.c993f8",
+        "name": "Gain",
+        "label": "",
+        "tooltip": "",
+        "group": "57fc9f5d.a197e8",
+        "order": 2,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "gain",
+        "topicType": "str",
+        "min": 0,
+        "max": 10,
+        "step": "0.1",
+        "className": "",
+        "x": 730,
+        "y": 320,
+        "wires": [
+            [
+                "3df5917a.351e26",
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "2af11b1a.c09dec",
+        "type": "ui_slider",
+        "z": "6a1fd15f.c993f8",
+        "name": "Volume",
+        "label": "",
+        "tooltip": "",
+        "group": "57fc9f5d.a197e8",
+        "order": 1,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "volume",
+        "topicType": "str",
+        "min": 0,
+        "max": 10,
+        "step": "0.1",
+        "className": "",
+        "x": 740,
+        "y": 380,
+        "wires": [
+            [
+                "42f65612.213dc",
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "93d56d84.6966e8",
+        "type": "ui_slider",
+        "z": "6a1fd15f.c993f8",
+        "name": "ISF",
+        "label": "",
+        "tooltip": "",
+        "group": "2401f0c0.f12538",
+        "order": 1,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "isf",
+        "topicType": "str",
+        "min": 0,
+        "max": 10,
+        "step": "0.1",
+        "className": "",
+        "x": 730,
+        "y": 440,
+        "wires": [
+            [
+                "6775f758.25b1d",
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "b58e03f0.043c1",
+        "type": "ui_slider",
+        "z": "6a1fd15f.c993f8",
+        "name": "Bass",
+        "label": "",
+        "tooltip": "",
+        "group": "2401f0c0.f12538",
+        "order": 2,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "bass",
+        "topicType": "str",
+        "min": 0,
+        "max": 10,
+        "step": "0.1",
+        "className": "",
+        "x": 730,
+        "y": 500,
+        "wires": [
+            [
+                "b6cfac9b.6df6c8",
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "8b37bece.4acc6",
+        "type": "ui_slider",
+        "z": "6a1fd15f.c993f8",
+        "name": "voice",
+        "label": "",
+        "tooltip": "",
+        "group": "57fc9f5d.a197e8",
+        "order": 6,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "voice",
+        "topicType": "str",
+        "min": 0,
+        "max": "5",
+        "step": "1",
+        "className": "",
+        "x": 730,
+        "y": 860,
+        "wires": [
+            [
+                "31bf36d3.4cf012",
+                "5af55022.5b8e5"
+            ]
+        ]
+    },
+    {
+        "id": "a0fa69c9.997d58",
+        "type": "ui_slider",
+        "z": "6a1fd15f.c993f8",
+        "name": "middle",
+        "label": "",
+        "tooltip": "",
+        "group": "2401f0c0.f12538",
+        "order": 5,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "middle",
+        "topicType": "str",
+        "min": 0,
+        "max": 10,
+        "step": "0.1",
+        "className": "",
+        "x": 730,
+        "y": 560,
+        "wires": [
+            [
+                "77b033f0.6cb3dc",
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "fa212efd.da34",
+        "type": "ui_slider",
+        "z": "6a1fd15f.c993f8",
+        "name": "treble",
+        "label": "",
+        "tooltip": "",
+        "group": "2401f0c0.f12538",
+        "order": 6,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "treble",
+        "topicType": "str",
+        "min": 0,
+        "max": 10,
+        "step": "0.1",
+        "className": "",
+        "x": 730,
+        "y": 620,
+        "wires": [
+            [
+                "ca722c6d.c933b8",
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "3df5917a.351e26",
+        "type": "ui_gauge",
+        "z": "6a1fd15f.c993f8",
+        "name": "Gain",
+        "group": "57fc9f5d.a197e8",
+        "order": 4,
+        "width": 4,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Gain",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#ef2929",
+            "#ca3838",
+            "#cc0000"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 930,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "42f65612.213dc",
+        "type": "ui_gauge",
+        "z": "6a1fd15f.c993f8",
+        "name": "volume",
+        "group": "57fc9f5d.a197e8",
+        "order": 3,
+        "width": 4,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Volume",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#ef2929",
+            "#ca3838",
+            "#cc0000"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 940,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "6775f758.25b1d",
+        "type": "ui_gauge",
+        "z": "6a1fd15f.c993f8",
+        "name": "isf",
+        "group": "2401f0c0.f12538",
+        "order": 3,
+        "width": 4,
+        "height": 4,
+        "gtype": "gage",
+        "title": "ISF",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#ca3838",
+            "#ef2929",
+            "#cc0000"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 930,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "b6cfac9b.6df6c8",
+        "type": "ui_gauge",
+        "z": "6a1fd15f.c993f8",
+        "name": "bass",
+        "group": "2401f0c0.f12538",
+        "order": 4,
+        "width": 4,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Bass",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#ca3838",
+            "#ef2929",
+            "#cc0000"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 930,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "6d84166e.7d4c18",
+        "type": "ui_gauge",
+        "z": "6a1fd15f.c993f8",
+        "name": "voice",
+        "group": "57fc9f5d.a197e8",
+        "order": 9,
+        "width": 4,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Voice",
+        "label": "{{topic}}",
+        "format": "{{payload}}",
+        "min": 0,
+        "max": "5",
+        "colors": [
+            "#ca3838",
+            "#ef2929",
+            "#cc0000"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 870,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "77b033f0.6cb3dc",
+        "type": "ui_gauge",
+        "z": "6a1fd15f.c993f8",
+        "name": "middle",
+        "group": "2401f0c0.f12538",
+        "order": 7,
+        "width": 4,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Mids",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#ca3838",
+            "#ef2929",
+            "#cc0000"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 930,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "ca722c6d.c933b8",
+        "type": "ui_gauge",
+        "z": "6a1fd15f.c993f8",
+        "name": "treble",
+        "group": "2401f0c0.f12538",
+        "order": 8,
+        "width": 4,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Trebble",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#ca3838",
+            "#ef2929",
+            "#cc0000"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 930,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "6ddbc5cb.0bb264",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter Gain",
+        "func": "gain = msg['payload']['Control']['gain']\nmsg['payload'] = gain\nreturn msg",
+        "outputs": 1,
+        "x": 530,
+        "y": 320,
+        "wires": [
+            [
+                "64019af1.59ff8c"
+            ]
+        ]
+    },
+    {
+        "id": "31bf36d3.4cf012",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Dump Json",
+        "func": "y = {} \ny[msg['topic']] = msg['payload']\n    \nmsg['payload'] = y \nreturn msg",
+        "outputs": 1,
+        "x": 1250,
+        "y": 320,
+        "wires": [
+            [
+                "b4de737e.07ded8",
+                "3bb880ab.17eed8"
+            ]
+        ]
+    },
+    {
+        "id": "d2098514.f38ae8",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter Vol",
+        "func": "vol = msg['payload']['Control']['volume']\nmsg['payload'] = vol\nreturn msg",
+        "outputs": 1,
+        "x": 520,
+        "y": 380,
+        "wires": [
+            [
+                "2af11b1a.c09dec"
+            ]
+        ]
+    },
+    {
+        "id": "f6267513.30335",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter ISF",
+        "func": "isf = msg['payload']['Control']['isf']\nmsg['payload'] = isf\nreturn msg",
+        "outputs": 1,
+        "x": 520,
+        "y": 440,
+        "wires": [
+            [
+                "93d56d84.6966e8"
+            ]
+        ]
+    },
+    {
+        "id": "d380a081.16181",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter Bass",
+        "func": "bass = msg['payload']['Control']['bass']\nmsg['payload'] = bass\nreturn msg",
+        "outputs": 1,
+        "x": 530,
+        "y": 500,
+        "wires": [
+            [
+                "b58e03f0.043c1"
+            ]
+        ]
+    },
+    {
+        "id": "f8396ac1.f8ca6",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter Voice",
+        "func": "voice = msg['payload']['Control']['voice']\nmsg['payload'] = voice\nreturn msg",
+        "outputs": 1,
+        "x": 530,
+        "y": 860,
+        "wires": [
+            [
+                "8b37bece.4acc6"
+            ]
+        ]
+    },
+    {
+        "id": "42ba86ff.8a0598",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter Mids",
+        "func": "middle = msg['payload']['Control']['middle']\nmsg['payload'] = middle\nreturn msg",
+        "outputs": 1,
+        "x": 530,
+        "y": 560,
+        "wires": [
+            [
+                "a0fa69c9.997d58"
+            ]
+        ]
+    },
+    {
+        "id": "6d489027.4c77d8",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter Treble",
+        "func": "treble = msg['payload']['Control']['treble']\nmsg['payload'] = treble\nreturn msg",
+        "outputs": 1,
+        "x": 530,
+        "y": 620,
+        "wires": [
+            [
+                "fa212efd.da34"
+            ]
+        ]
+    },
+    {
+        "id": "6a96caef.f4b584",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter mod_switch",
+        "func": "mod_switch = bool(msg['payload']['Control']['mod_switch'])\nmsg['payload'] = mod_switch\nreturn msg",
+        "outputs": 1,
+        "x": 550,
+        "y": 920,
+        "wires": [
+            [
+                "25712ac3.121d5e"
+            ]
+        ]
+    },
+    {
+        "id": "2a370748.43dbb",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter delay_switch",
+        "func": "delay_switch = bool(msg['payload']['Control']['delay_switch'])\nmsg['payload'] = delay_switch\nreturn msg",
+        "outputs": 1,
+        "x": 550,
+        "y": 980,
+        "wires": [
+            [
+                "7f3811fc.24eb98"
+            ]
+        ]
+    },
+    {
+        "id": "5af55022.5b8e5",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "func": "voice_dict={\n    0:\"Clean Warm\",\n    1:\"Clean Bright\",\n    2:\"Crunch\",\n    3:\"Super Crunch\",\n    4:\"OD1\",\n    5:\"OD2\",\n}\n\nmsg['topic']  = voice_dict[msg['payload']]\nreturn msg",
+        "outputs": 1,
+        "x": 1040,
+        "y": 860,
+        "wires": [
+            [
+                "6d84166e.7d4c18"
+            ]
+        ]
+    },
+    {
+        "id": "3a956eac.9d9d0a",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter reverb_switch",
+        "func": "reverb_switch = bool(msg['payload']['Control']['reverb_switch'])\nmsg['payload'] = reverb_switch\nreturn msg",
+        "outputs": 1,
+        "x": 550,
+        "y": 1040,
+        "wires": [
+            [
+                "347ceda7.54c912"
+            ]
+        ]
+    },
+    {
+        "id": "56f3151a.1d7a24",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Read Json control file",
+        "func": "import json\n\nfile = \"/home/pi/Blackstar_FootSwitch/Foot_Switch/json/default.json\"\n\nfile_desc = open(file, 'r')\ndict = json.load(file_desc)\nprint(dict)\nmsg['payload'] = dict\nfile_desc.close()\nreturn msg",
+        "outputs": 1,
+        "x": 280,
+        "y": 320,
+        "wires": [
+            [
+                "6ddbc5cb.0bb264",
+                "d2098514.f38ae8",
+                "d380a081.16181",
+                "f8396ac1.f8ca6",
+                "42ba86ff.8a0598",
+                "6d489027.4c77d8",
+                "2a370748.43dbb",
+                "3a956eac.9d9d0a",
+                "dcb62eb2.93ffa",
+                "19f16bbc.819114",
+                "58a34549.89d6ec",
+                "f6267513.30335",
+                "6a96caef.f4b584"
+            ]
+        ]
+    },
+    {
+        "id": "7e8ceaf.0f30894",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "func": "msg['payload']  = int(msg['payload'])\nreturn msg",
+        "outputs": 1,
+        "x": 1040,
+        "y": 920,
+        "wires": [
+            [
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "857362b.417312",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "func": "msg['payload']  = int(msg['payload'])\nreturn msg",
+        "outputs": 1,
+        "x": 1040,
+        "y": 980,
+        "wires": [
+            [
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "d6a33968.60b0b8",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "func": "msg['payload'] = int(msg['payload'])\nreturn msg",
+        "outputs": 1,
+        "x": 1040,
+        "y": 1040,
+        "wires": [
+            [
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "5ee3146a.832cdc",
+        "type": "delay",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0.1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 870,
+        "y": 920,
+        "wires": [
+            [
+                "7e8ceaf.0f30894"
+            ]
+        ]
+    },
+    {
+        "id": "2664d4a0.5e00f4",
+        "type": "delay",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0.2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 870,
+        "y": 980,
+        "wires": [
+            [
+                "857362b.417312"
+            ]
+        ]
+    },
+    {
+        "id": "a02b1ae2.c72698",
+        "type": "delay",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0.3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 870,
+        "y": 1040,
+        "wires": [
+            [
+                "d6a33968.60b0b8"
+            ]
+        ]
+    },
+    {
+        "id": "41d86bb1.edcf14",
+        "type": "ui_dropdown",
+        "z": "6a1fd15f.c993f8",
+        "name": "Mod",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "d6bba592.96c43",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Phaser",
+                "value": 0,
+                "type": "num"
+            },
+            {
+                "label": "Chorus",
+                "value": 1,
+                "type": "num"
+            },
+            {
+                "label": "Envelope",
+                "value": 2,
+                "type": "num"
+            },
+            {
+                "label": "Tremolo",
+                "value": 3,
+                "type": "num"
+            }
+        ],
+        "payload": "",
+        "topic": "mod_type",
+        "topicType": "str",
+        "className": "",
+        "x": 730,
+        "y": 680,
+        "wires": [
+            [
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "5cd7d25.ddd672c",
+        "type": "ui_dropdown",
+        "z": "6a1fd15f.c993f8",
+        "name": "Delay",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "d6bba592.96c43",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Linear",
+                "value": 0,
+                "type": "num"
+            },
+            {
+                "label": "Analog",
+                "value": 1,
+                "type": "num"
+            },
+            {
+                "label": "Tape",
+                "value": 2,
+                "type": "num"
+            },
+            {
+                "label": "Multi",
+                "value": 3,
+                "type": "num"
+            }
+        ],
+        "payload": "",
+        "topic": "mod_type",
+        "topicType": "str",
+        "className": "",
+        "x": 730,
+        "y": 740,
+        "wires": [
+            [
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "c4cbcf8b.13a21",
+        "type": "ui_dropdown",
+        "z": "6a1fd15f.c993f8",
+        "name": "Reverb",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "d6bba592.96c43",
+        "order": 9,
+        "width": 3,
+        "height": 1,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Room",
+                "value": 0,
+                "type": "num"
+            },
+            {
+                "label": "Hall",
+                "value": 1,
+                "type": "num"
+            },
+            {
+                "label": "Spring",
+                "value": 2,
+                "type": "num"
+            },
+            {
+                "label": "Plate",
+                "value": 3,
+                "type": "num"
+            }
+        ],
+        "payload": "",
+        "topic": "mod_type",
+        "topicType": "str",
+        "className": "",
+        "x": 740,
+        "y": 800,
+        "wires": [
+            [
+                "31bf36d3.4cf012"
+            ]
+        ]
+    },
+    {
+        "id": "dcb62eb2.93ffa",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter reverb_type ",
+        "func": "reverb_type = bool(msg['payload']['Control']['reverb_type'])\nmsg['payload'] = reverb_type\nreturn msg",
+        "outputs": 1,
+        "x": 550,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "19f16bbc.819114",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter delay_type",
+        "func": "delay_type = bool(msg['payload']['Control']['delay_type'])\nmsg['payload'] = delay_type\nreturn msg",
+        "outputs": 1,
+        "x": 540,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "58a34549.89d6ec",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "Filter mod_type",
+        "func": "mod_type = bool(msg['payload']['Control']['mod_type'])\nmsg['payload'] = mod_type\nreturn msg",
+        "outputs": 1,
+        "x": 540,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b4de737e.07ded8",
+        "type": "mqtt out",
+        "z": "6a1fd15f.c993f8",
+        "name": "Control MQTT Publish",
+        "topic": "Footswitch/Control",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "63b74206.85cbc4",
+        "x": 1520,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "7c22e1c3.86ced8",
+        "type": "inject",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 70,
+        "y": 360,
+        "wires": [
+            [
+                "1bdfe895dd182312"
+            ]
+        ]
+    },
+    {
+        "id": "2bd55391.053aa4",
+        "type": "python3-function",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "func": "import os \nimport subprocess\n\nCWD= '/home/pi/Blackstar_FootSwitch/Foot_Switch'  \nprocess = subprocess.Popen(['python3', 'foot_switch.py'],\n                    cwd=CWD,\n                    stdout=subprocess.PIPE, \n                    stderr=subprocess.PIPE)\n\n\nreturn msg",
+        "outputs": 1,
+        "x": 260,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "768258fa.6ef61",
+        "type": "ui_button",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "group": "a1d9c621.746738",
+        "order": 16,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Patch Up",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 190,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5dff66cd.b630b",
+        "type": "ui_button",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "group": "a1d9c621.746738",
+        "order": 16,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Patch Down",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 190,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ed7763af.ef6308",
+        "type": "ui_text",
+        "z": "6a1fd15f.c993f8",
+        "group": "a1d9c621.746738",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Patch Selected",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "x": 200,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "1bdfe895dd182312",
+        "type": "debug",
+        "z": "6a1fd15f.c993f8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 220,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "fb8d98d8.cea8e",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "57fc9f5d.a197e8",
+        "order": 5,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "7b53c3fe.bdeef4",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "57fc9f5d.a197e8",
+        "order": 7,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "dce4a60.cf4d0d8",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "57fc9f5d.a197e8",
+        "order": 8,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "8f3fbb6e.f5d27",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "57fc9f5d.a197e8",
+        "order": 10,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "3475038e.811b1c",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "57fc9f5d.a197e8",
+        "order": 11,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "5e80aa80.1207f4",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "57fc9f5d.a197e8",
+        "order": 12,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "5ee42db3.1ac6ec",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "57fc9f5d.a197e8",
+        "order": 13,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "c3e9e61f.cf12b",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "57fc9f5d.a197e8",
+        "order": 14,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "c93f3c8.dc69a4",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "57fc9f5d.a197e8",
+        "order": 15,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "15344fb0.1de1d",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "57fc9f5d.a197e8",
+        "order": 16,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "15a1af4e.be1679",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "d6bba592.96c43",
+        "order": 2,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "d63a8187.876458",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "d6bba592.96c43",
+        "order": 5,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "c8ac56d2.aa45e8",
+        "type": "ui_spacer",
+        "z": "6a1fd15f.c993f8",
+        "name": "spacer",
+        "group": "d6bba592.96c43",
+        "order": 8,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "d6bba592.96c43",
+        "type": "ui_group",
+        "name": "Effects",
+        "tab": "a2573943.0b2e18",
+        "order": 3,
+        "disp": true,
+        "width": 8,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "57fc9f5d.a197e8",
+        "type": "ui_group",
+        "name": "Master",
+        "tab": "a2573943.0b2e18",
+        "order": 1,
+        "disp": true,
+        "width": "8",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2401f0c0.f12538",
+        "type": "ui_group",
+        "name": "Tone",
+        "tab": "a2573943.0b2e18",
+        "order": 2,
+        "disp": true,
+        "width": 8,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "63b74206.85cbc4",
+        "type": "mqtt-broker",
+        "name": "Mosquitto",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "2",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "Footswitch/will",
+        "willQos": "2",
+        "willPayload": "kill",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "a1d9c621.746738",
+        "type": "ui_group",
+        "name": "Patch",
+        "tab": "a2573943.0b2e18",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a2573943.0b2e18",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

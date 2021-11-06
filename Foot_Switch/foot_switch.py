@@ -28,6 +28,7 @@ class foot_switch():
             "FS_REV_TOGGLE": 26,
         },
         "Control" : {},
+        "Control_save" : {},
         "Patch_index" : -1,
         "Patch_len": 0
     }
@@ -82,17 +83,37 @@ class foot_switch():
         """
         new_control_dict = {}
         for element in control_dict:
-            new_control_dict[element] = int(self._map_range(
-                                            control_dict[element],
-                                            self.bs.control_limits_rev[element] if flag else self.bs.control_limits[element],
-                                            self.bs.control_limits[element] if flag else self.bs.control_limits_rev[element]))
+            if flag:
+                new_control_dict[element] = int(self._map_range(
+                                                control_dict[element],
+                                                self.bs.control_limits_rev[element],
+                                                self.bs.control_limits[element]))
+            else:
+                x = round(self._map_range(
+                          control_dict[element],
+                          self.bs.control_limits[element],
+                          self.bs.control_limits_rev[element]), 1)
+                if float(x) == int(x):
+                    new_control_dict[element] = int(x)
+                else:
+                    new_control_dict[element] = x
         return new_control_dict
 
     def foot_switch_thread_entry(self, name):
         """
             Thread Entry for foot_switch thread
         """
+        # previous_time = 0
+        # current_time = self._millis()
+        json_file_name = 'json/default.json'
         while self.alive:
+            # if current_time - previous_time > 1000:
+            if not self.FS_BUTTON_DICT['Control_save'] == {}:
+                with open(json_file_name, 'r') as json_file:
+                    file_dict = json.load(json_file)
+                    file_dict['Control'].update(self.FS_BUTTON_DICT['Control_save'])
+                with open(json_file_name, 'w') as json_file:
+                    json.dump(file_dict, json_file, sort_keys=True, indent=4)
             try:
                 if self.task_q.empty() == False:
                     request = self.task_q.get()
@@ -103,14 +124,16 @@ class foot_switch():
 
             try:
                 self.FS_BUTTON_DICT['Control'].update(self.bs.read_data())
-                self.logger.debug(self.FS_BUTTON_DICT['Control'])
+                # self.logger.debug(self.FS_BUTTON_DICT['Control'])
+                self.FS_BUTTON_DICT['Control_save'] = self.patch_range_human_to_device(self.FS_BUTTON_DICT['Control'], flag=False)
+                self.logger.debug(self.FS_BUTTON_DICT['Control_save'])
             except NoDataAvailable:
                 pass
             except KeyboardInterrupt:
                 self.alive = False
         self.logger.info(" Foot Switch Thread Killed! ")
 
-    def _millis():
+    def _millis(self):
         return time.time() * 1000
 
     def fs_but_callback(self, bcm_pin):
@@ -171,7 +194,7 @@ class foot_switch():
                 self.FS_BUTTON_DICT['Control'][control_str] %= self.bs.control_limits['mod_type'][1]
             else:
                 control_str = 'reverb_switch'
-                self.FS_BUTTON_DICT['Control'][control_str] ^= 1;
+                self.FS_BUTTON_DICT['Control'][control_str] ^= 1
             self.bs.set_control(control_str, self.FS_BUTTON_DICT['Control']['mod_switch'])
 
     def _map_range(self, val, input_range, output_range):
@@ -300,12 +323,14 @@ def main_thread_entry(name):
         try:
             if mqtt_task_q.empty() == False:
                 control_change = mqtt_task_q.get()
-                json_file_name = 'json/default.json'
-                with open(json_file_name, 'r+') as json_file:
-                    file_dict = json.load(json_file)
-                    file_dict['Control'][list(control_change.keys())[0]] = list(control_change.values())[0]
-                with open(json_file_name, 'w') as json_file:
-                    json.dump(file_dict, json_file, sort_keys=True, indent=4)
+                # json_file_name = 'json/default.json'
+                fs.FS_BUTTON_DICT['Control_save'][list(control_change.keys())[0]] = list(control_change.values())[0]
+
+                # with open(json_file_name, 'r') as json_file:
+                #     file_dict = json.load(json_file)
+                #     file_dict['Control'][list(control_change.keys())[0]] = list(control_change.values())[0]
+                # with open(json_file_name, 'w') as json_file:
+                #     json.dump(file_dict, json_file, sort_keys=True, indent=4)
                 fs.set_limited_controls(fs.patch_range_human_to_device(control_change, flag=True))
                 mqtt_task_q.task_done()
         except json.decoder.JSONDecodeError as e:
@@ -326,4 +351,4 @@ try:
     signal.signal(signal.SIGTERM, ctrl_c_handler)
     client.loop_start()
 except Exception as e:
-    logger.error(" Exception in Parent thread " + str(e))
+    logger.error(" Exception in Parent thread: " + str(e))

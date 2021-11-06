@@ -454,6 +454,7 @@ class BlackstarIDAmp(object):
                 self.disconnect()
         except:
             pass
+            
     def disconnect(self):
         '''Disconnect from the amplifer and release all resources. If we're
         already disconnected, this method is a no-op
@@ -561,7 +562,7 @@ class BlackstarIDAmp(object):
 
         ret = self._send_data(data)
 
-        logger.debug('Set control: {0} -> {1}'.format(control, value))
+        logger.debug(' {0} -> {1}'.format(control, value))
 
         return ret
 
