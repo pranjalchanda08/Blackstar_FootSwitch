@@ -33,12 +33,13 @@ class foot_switch():
         "Patch_len": 0
     }
 
-    def __init__(self, logger):
+    def __init__(self, logger, mqtt_client):
         """
             Initialise Foot Switch instance
         """
         GPIO.setmode(GPIO.BCM)
-        
+        self.mqtt_client = mqtt_client
+        self.ms_start = 0
         for button in list(self.FS_BUTTON_DICT['Pins'].values()):
             GPIO.setup(button, GPIO.IN, pull_up_down = GPIO.PUD_UP)
             GPIO.add_event_detect(button, GPIO.BOTH, callback = self.fs_but_callback, bouncetime=500)
@@ -103,14 +104,26 @@ class foot_switch():
         """
             Thread Entry for foot_switch thread
         """
-        json_file_name = 'json/default.json'
+        json_file_path = "json/default.json"
+        self.FS_BUTTON_DICT['Patch_name'], json_file_path = self.get_selected_preset()
+        self.mqtt_client.publish(topic='Footswitch/PatchSelected', 
+                                    payload=self.FS_BUTTON_DICT['Patch_name'],
+                                    qos=1, 
+                                    retain=True)
         while self.alive:
+            self.FS_BUTTON_DICT['Patch_name'], json_file_path = self.get_selected_preset()
             if not self.FS_BUTTON_DICT['Control_save'] == {}:
-                with open(json_file_name, 'r') as json_file:
+                with open(json_file_path, 'r') as json_file:
                     file_dict = json.load(json_file)
                     file_dict['Control'].update(self.FS_BUTTON_DICT['Control_save'])
-                with open(json_file_name, 'w') as json_file:
+                with open(json_file_path, 'w') as json_file:
                     json.dump(file_dict, json_file, sort_keys=True, indent=4)
+                
+                self.mqtt_client.publish(topic='Footswitch/PatchSelected', 
+                                    payload=self.FS_BUTTON_DICT['Patch_name'],
+                                    qos=1, 
+                                    retain=True)
+                self.FS_BUTTON_DICT['Control_save'] = {}
             try:
                 if self.task_q.empty() == False:
                     request = self.task_q.get()
@@ -121,7 +134,6 @@ class foot_switch():
 
             try:
                 self.FS_BUTTON_DICT['Control'].update(self.bs.read_data())
-                # self.logger.debug(self.FS_BUTTON_DICT['Control'])
                 self.FS_BUTTON_DICT['Control_save'] = self.patch_range_human_to_device(self.FS_BUTTON_DICT['Control'], flag=False)
                 self.logger.debug(self.FS_BUTTON_DICT['Control_save'])
             except NoDataAvailable:
@@ -157,12 +169,19 @@ class foot_switch():
         if bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_PATCH_UP']:
             self.FS_BUTTON_DICT['Patch_index'] += 1
             self.FS_BUTTON_DICT['Patch_index'] %= self.FS_BUTTON_DICT['Patch_len']
-            self.set_preset_index(self.FS_BUTTON_DICT['Patch_index'], self.file_dict)
+            self.FS_BUTTON_DICT['Patch_len'], self.FS_BUTTON_DICT['Patch_name'] = \
+                self.set_preset_index(self.FS_BUTTON_DICT['Patch_index'])
+            
 
         elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_PATCH_DOWN']:
             self.FS_BUTTON_DICT['Patch_index'] += 1
             self.FS_BUTTON_DICT['Patch_index'] %= self.FS_BUTTON_DICT['Patch_len']
-            self.set_preset_index(self.FS_BUTTON_DICT['Patch_index'], self.file_dict)
+            self.FS_BUTTON_DICT['Patch_len'], self.FS_BUTTON_DICT['Patch_name'] = \
+                self.set_preset_index(self.FS_BUTTON_DICT['Patch_index'])
+            self.mqtt_client.publish(topic='Footswitch/PatchSelected', 
+                                    payload=self.FS_BUTTON_DICT['Patch_name'],
+                                    qos=1, 
+                                    retain=False)
 
         elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_MOD_TOGGLE']:
             if request['long_press']:
@@ -171,7 +190,7 @@ class foot_switch():
                 self.FS_BUTTON_DICT['Control'][control_str] %= self.bs.control_limits['mod_type'][1]
             else:
                 control_str = 'mod_switch'
-                self.FS_BUTTON_DICT['Control'][control_str] ^= 1;
+                self.FS_BUTTON_DICT['Control'][control_str] ^= 1
             self.bs.set_control(control_str, self.FS_BUTTON_DICT['Control']['mod_switch'])
 
         elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_DEL_TOGGLE']:
@@ -181,7 +200,7 @@ class foot_switch():
                 self.FS_BUTTON_DICT['Control'][control_str] %= self.bs.control_limits['mod_type'][1]
             else:
                 control_str = 'delay_switch'
-                self.FS_BUTTON_DICT['Control'][control_str] ^= 1;
+                self.FS_BUTTON_DICT['Control'][control_str] ^= 1
             self.bs.set_control(control_str, self.FS_BUTTON_DICT['Control']['mod_switch'])
 
         elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_REV_TOGGLE']:
@@ -224,6 +243,19 @@ class foot_switch():
                 continue
             self.bs.set_control(control, self.FS_BUTTON_DICT['Control'][control])
 
+    def get_selected_preset(self):
+        """
+            Get patch that is selected
+        """
+        file = "json/patch.json"
+        with open(file, 'r') as patch_json_file:
+            file_patch = json.load(patch_json_file)
+        for patch in file_patch['patches']:
+            if file_patch['patches'][patch]['selected'] is True:
+                preset_name = patch
+                return preset_name, file_patch['patches'][preset_name]['path']
+
+        
     def set_preset(self, preset_name):
         """
             Set all the control settings according to patch name
@@ -267,12 +299,11 @@ class foot_switch():
                 preset_name = patch
                 return self.set_preset(preset_name=preset_name)
 
-    def set_preset_index(self, index, file_dict):
+    def set_preset_index(self, index):
         """
             Set all the control settings according to index
 
             index - index of the patch starting from 0
-            file_dict - dictionary converted from patch.json
         """
         if index > self.FS_BUTTON_DICT['Patch_len']:
             self.logger.error("Invalid index")
@@ -281,12 +312,13 @@ class foot_switch():
             with open('json/patch.json', 'r') as patch_json_file:
                 file_patch = json.load(patch_json_file)
                 preset_name = list(file_patch['patches'].keys())[index]
-            with open(os.path.join('.', file_patch['patches'][preset_name]['path']), 'r') as json_file:
-                file_dict = json.load(json_file)
+                self.set_preset(preset_name=preset_name)
+        #     with open(os.path.join('.', file_patch['patches'][preset_name]['path']), 'r') as json_file:
+        #         file_dict = json.load(json_file)
 
-        self.FS_BUTTON_DICT['Control'] = self.patch_range_human_to_device(file_dict['Control'])
-        self.set_all_controls(self.FS_BUTTON_DICT['Control'])
-        return len(file_dict['patches']), preset_name
+        # self.FS_BUTTON_DICT['Control'] = self.patch_range_human_to_device(file_dict['Control'])
+        # self.set_all_controls(self.FS_BUTTON_DICT['Control'])
+        return len(list(file_patch['patches'].keys())), preset_name
 
 def on_connect(client, userdata, flags, rc):
     """
@@ -299,8 +331,11 @@ def on_message(client, userdata, message):
         MQTT on_message callback
     """
     msg_json = json.loads(message.payload.decode('utf-8'))
-    mqtt_task_q.put_nowait(msg_json)
-    logger.debug(str(msg_json))
+    if message.topic == 'Footswitch/Patch':
+        fs.fs_but_callback(msg_json['bcm_pin'])
+    else:
+        mqtt_task_q.put_nowait(msg_json)
+        logger.debug(str(msg_json))
 
 def ctrl_c_handler(signal, dummy):
     """
@@ -328,15 +363,16 @@ def main_thread_entry(name):
     logger.info(" Main Thread Killed!")
 
 try:
-    fs = foot_switch(logger=logger)
     mqtt_task_q = queue.Queue()
     main_task = threading.Thread(target=main_thread_entry, args=(1,))
     main_task.start()
     client = mqtt.Client("LocalHost")
     client.connect("localhost")
     client.subscribe("Footswitch/Control")
+    client.subscribe("Footswitch/Patch")
     client.on_message = on_message
     client.on_connect = on_connect
+    fs = foot_switch(logger=logger, mqtt_client=client)
     signal.signal(signal.SIGINT, ctrl_c_handler)
     signal.signal(signal.SIGTERM, ctrl_c_handler)
     client.loop_start()

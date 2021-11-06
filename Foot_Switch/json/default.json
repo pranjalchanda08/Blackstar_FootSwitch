@@ -1,16 +1,16 @@
 {
     "Control": {
-        "bass": 8.2,
+        "bass": 2.2,
         "delay_feedback": 0,
         "delay_level": 0,
         "delay_switch": 1,
         "delay_time": 512,
         "delay_type": 0,
         "fx_focus": 3,
-        "gain": 7.2,
-        "isf": 2.4,
+        "gain": 9,
+        "isf": 1.7,
         "master_volume": 0,
-        "middle": 6.5,
+        "middle": 4.2,
         "mod_level": 0,
         "mod_manual": 0,
         "mod_segval": 0,
@@ -23,11 +23,11 @@
         "reverb_size": 3,
         "reverb_switch": 1,
         "reverb_type": 2,
-        "treble": 8,
+        "treble": 3.7,
         "tvp_switch": 1,
         "tvp_valve": 4,
-        "voice": 2,
-        "volume": 6.9
+        "voice": 0,
+        "volume": 5
     },
     "name": "default"
 }

@@ -20,6 +20,7 @@ import usb.util
 import usb.hotplug
 import logging
 import subprocess
+import time
 import xml.etree.ElementTree as et
 
 # Set up logging and create a null handler in case the application doesn't
@@ -738,7 +739,7 @@ class BlackstarIDAmp(object):
 
         '''
         try:
-            packet = self.device.read(self.interrupt_in, 64)
+            packet = self.device.read(self.interrupt_in, 64, timeout=100)
         except usb.core.USBError:
             raise NoDataAvailable
 
@@ -974,7 +975,9 @@ class BlackstarIDAmp(object):
     def reset_usb(self):
         retry = 3
         while retry:
-            pipe = subprocess.run(['usbreset', '"ID:Core Amplifier"'])
+            pipe = subprocess.run(['usbreset', 'ID:Core Amplifier'])
+            if(type(pipe.stdout)) == None:
+                raise USBError("Reset Error")
             if 'failed' in pipe.stdout.decode():
                 retry -=1
             else:
@@ -987,7 +990,11 @@ class BlackstarIDAmp(object):
             try:
                 self.connect()
             except:
-                self.reset_usb()
+                try:
+                    self.reset_usb()
+                except:
+                    pass
+                time.sleep(1)
             self.drain()
             self.startup()
         return self.connected
