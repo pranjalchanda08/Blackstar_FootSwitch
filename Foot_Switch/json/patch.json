@@ -6,11 +6,11 @@
         },
         "Metal_low": {
             "path": "Patches/Metal_low.json",
-            "selected": false
+            "selected": true
         },
         "default": {
             "path": "json/default.json",
-            "selected": true
+            "selected": false
         }
     }
 }

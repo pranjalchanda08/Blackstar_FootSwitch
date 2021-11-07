@@ -8,7 +8,7 @@ class OLED():
 
     def __init__(self):
         # 128x32 display with hardware I2C:
-        self.disp = Adafruit_SSD1306.SSD1306_128_32(rst=None)
+        self.disp = Adafruit_SSD1306.SSD1306_128_64(rst=None)
         # Initialize library.
         self.disp.begin()
 
@@ -23,6 +23,12 @@ class OLED():
         self.image = Image.new('1', (self.width, self.height))
         self.draw = ImageDraw.Draw(self.image)
         self.font = ImageFont.load_default()
+        self.padding = -2
+        self.top = self.padding
+        self.bottom = self.height-self.padding
 
     def disp_text(self, text_str:str, xy_pos:tuple):
+        self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
         self.draw.text(text=text_str, xy=xy_pos, font=self.font, fill=255)
+        self.disp.image(self.image)
+        self.disp.display()

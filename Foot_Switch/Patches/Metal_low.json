@@ -1,12 +1,12 @@
 {
     "Control": {
-        "bass": 3.9,
+        "bass": 7.2,
         "delay_feedback": 0,
         "delay_level": 0,
         "delay_switch": 0,
-        "delay_time": 700,
+        "delay_time": 512,
         "delay_type": 0,
-        "fx_focus": 1,
+        "fx_focus": 0,
         "gain": 7.8,
         "isf": 10,
         "master_volume": 0,
@@ -19,15 +19,15 @@
         "mod_type": 2,
         "presence": 8.9,
         "resonance": 10,
-        "reverb_level": 93,
+        "reverb_level": 10,
         "reverb_size": 3,
         "reverb_switch": 0,
         "reverb_type": 2,
-        "treble": 3.7,
+        "treble": 3.5,
         "tvp_switch": 1,
         "tvp_valve": 4,
         "voice": 3,
-        "volume": 5
+        "volume": 7.5
     },
     "name": "Metal_Low"
 }

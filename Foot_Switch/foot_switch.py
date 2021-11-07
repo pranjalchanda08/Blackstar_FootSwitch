@@ -12,7 +12,7 @@ import paho.mqtt.client as mqtt
 
 THREAD_EXIT = False
 
-logging.basicConfig(level=logging.NOTSET)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(" FootSwitch ")
 
 class foot_switch():
@@ -48,6 +48,7 @@ class foot_switch():
         
         try:
             self.oled = OLED()
+            self.oled.disp_text("Hello World!!", (30, self.oled.height/2))
         except Exception as e:
             self.logger.error(" OLED: " + str(e))
             
@@ -313,11 +314,6 @@ class foot_switch():
                 file_patch = json.load(patch_json_file)
                 preset_name = list(file_patch['patches'].keys())[index]
                 self.set_preset(preset_name=preset_name)
-        #     with open(os.path.join('.', file_patch['patches'][preset_name]['path']), 'r') as json_file:
-        #         file_dict = json.load(json_file)
-
-        # self.FS_BUTTON_DICT['Control'] = self.patch_range_human_to_device(file_dict['Control'])
-        # self.set_all_controls(self.FS_BUTTON_DICT['Control'])
         return len(list(file_patch['patches'].keys())), preset_name
 
 def on_connect(client, userdata, flags, rc):
