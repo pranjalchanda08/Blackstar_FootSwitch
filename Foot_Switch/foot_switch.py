@@ -48,7 +48,7 @@ class foot_switch():
         
         try:
             self.oled = OLED()
-            self.oled.disp_text("Hello World!!", (30, self.oled.height/2))
+            self.oled.disp_text("1234567890", (0, 0))
         except Exception as e:
             self.logger.error(" OLED: " + str(e))
             

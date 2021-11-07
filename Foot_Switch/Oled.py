@@ -22,13 +22,13 @@ class OLED():
         self.height = self.disp.height
         self.image = Image.new('1', (self.width, self.height))
         self.draw = ImageDraw.Draw(self.image)
-        self.font = ImageFont.load_default()
+        self.font = ImageFont.truetype('font/PixelOperator.ttf', 20)
         self.padding = -2
         self.top = self.padding
         self.bottom = self.height-self.padding
 
     def disp_text(self, text_str:str, xy_pos:tuple):
         self.draw.rectangle((0,0,self.width,self.height), outline=0, fill=0)
-        self.draw.text(text=text_str, xy=xy_pos, font=self.font, fill=255)
+        self.draw.text(text=text_str, xy=xy_pos, font=self.font, fill=150)
         self.disp.image(self.image)
         self.disp.display()
