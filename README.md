@@ -1,23 +1,24 @@
-# 1. Blackstar Foot Switch
+# 1. Table of Content
+- [1. Table of Content](#1-table-of-content)
+- [2. Introduction](#2-introduction)
+  - [2.1. Installation](#21-installation)
+  - [2.2. Setup default Audio PCM channel](#22-setup-default-audio-pcm-channel)
+  - [2.3. Auto-start setup](#23-auto-start-setup)
+  - [2.4. Pin config](#24-pin-config)
+
+# 2. Introduction
 A Project to create BlackStart Foot Swith over USB
 
-- [1. Blackstar Foot Switch](#1-blackstar-foot-switch)
-  - [1.1. Installation](#11-installation)
-  - [1.2. Setup default Audio PCM channel](#12-setup-default-audio-pcm-channel)
-  - [1.3. Auto-start setup](#13-auto-start-setup)
-  - [1.4. Pin config](#14-pin-config)
-
-## 1.1. Installation
+## 2.1. Installation
 
 ```sh
-$ sudo apt-get install python3-setuptools python-usb
-$ cd pyusb
-$ sudo setup.py install
-$ cd ../Adafruit_Python_SSD1306
-$ sudo setup.py install
+$ git clone --recursive https://github.com/pranjalchanda08/Blackstar_FootSwitch.git
+$ cd Blackstar_FootSwitch
+$ chmod +x env_setup.sh
+$ ./env_setup.sh
 ```
 
-## 1.2. Setup default Audio PCM channel
+## 2.2. Setup default Audio PCM channel
 
 ```sh
 $ aplay -l
@@ -30,7 +31,7 @@ $ sudo nano /usr/share/alsa/alsa.conf
 
 - Replace `defaults.pcm.card {}` and `defaults.pcm.device {}` as required
 
-## 1.3. Auto-start setup
+## 2.3. Auto-start setup
 
 ```sh
 $ sudo systemctl enable nodered.service
@@ -43,7 +44,7 @@ $ crontab -e
 @reboot cd /home/pi/Blackstar_FootSwitch/Foot_Swich; python3 foot_switch.py
 ```
 
-## 1.4. Pin config
+## 2.4. Pin config
 
 
 | Pin Type |Connection Name | BCM Pin Map | Pin Number|Direction|
