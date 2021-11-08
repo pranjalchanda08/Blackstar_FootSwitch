@@ -7,7 +7,6 @@ import signal
 import os
 import time
 from numpy import interp
-from Oled import OLED
 import paho.mqtt.client as mqtt
 
 THREAD_EXIT = False
@@ -46,12 +45,6 @@ class foot_switch():
         
         self.logger = logger
         
-        try:
-            self.oled = OLED()
-            self.oled.disp_text("1234567890", (0, 0))
-        except Exception as e:
-            self.logger.error(" OLED: " + str(e))
-            
         self.bs = BlackstarIDAmp()
         connected = self.bs.initialise()
         if connected:
@@ -76,6 +69,12 @@ class foot_switch():
 
     def __del__(self):
         self.close()
+
+    def oled_display(self, string):
+        self.mqtt_client.publish(topic='Footswitch/Display', 
+                                    payload=string,
+                                    qos=1, 
+                                    retain=True)    
 
     def patch_range_human_to_device(self, control_dict, flag=True):
         """
@@ -124,6 +123,8 @@ class foot_switch():
                                     payload=self.FS_BUTTON_DICT['Patch_name'],
                                     qos=1, 
                                     retain=True)
+                self.oled_display(self.FS_BUTTON_DICT['Patch_name'])
+                
                 self.FS_BUTTON_DICT['Control_save'] = {}
             try:
                 if self.task_q.empty() == False:
