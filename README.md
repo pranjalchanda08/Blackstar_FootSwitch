@@ -55,6 +55,14 @@ $ crontab -e
 ||Mod Toggle  | GPIO 13 | Pin 33 | Input |
 ||Delay Toggle  | GPIO 19 | Pin 35 | Input |
 ||Reverb Toggle  | GPIO 26 | Pin 37 | Input |
+||TFT D/C|GPIO 25 |Pin 22| Output |
+||TFT RST|GPIO 23 |Pin 16| Output |
+||TFT LED|GPIO 18 (PWM)|Pin 12| Output |
+|SPI1 Master||||
+||TFT MOSI|GPIO 10 (MOSI)|Pin 19| Output |
+||TFT MISO|GPIO 9 (MISO)|Pin 21| Input |
+||TFT SCK| GPIO 11 (SCK)|Pin 23| Output |
+||TFT CS|  GPIO 8 (CE0)|Pin 24| Output |
 |I2C Master||||
 ||OLED SCL|I2C1 SCL|Pin 5| Output |
 ||OLED SDA|I2C1 SDA|Pin 3| Input/Output |
