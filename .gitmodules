@@ -8,3 +8,6 @@
 [submodule "bt-speaker"]
 	path = bt-speaker
 	url = https://github.com/lukasjapan/bt-speaker.git
+[submodule "Adafruit_Python_ILI9341"]
+	path = Adafruit_Python_ILI9341
+	url = https://github.com/adafruit/Adafruit_Python_ILI9341.git
