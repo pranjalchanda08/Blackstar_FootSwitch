@@ -11,3 +11,6 @@
 [submodule "Adafruit_Python_ILI9341"]
 	path = Adafruit_Python_ILI9341
 	url = https://github.com/adafruit/Adafruit_Python_ILI9341.git
+[submodule "Adafruit_CircuitPython_RGB_Display"]
+	path = Adafruit_CircuitPython_RGB_Display
+	url = https://github.com/adafruit/Adafruit_CircuitPython_RGB_Display.git
