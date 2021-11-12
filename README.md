@@ -40,7 +40,7 @@ $ crontab -e
 - Add following lines at the last and save
 
 ```txt
-@reboot cd /home/pi/Blackstar_FootSwitch/Foot_Swich; python3 Oled.py
+@reboot cd /home/pi/Blackstar_FootSwitch/Foot_Swich; python3 Tft.py
 @reboot cd /home/pi/Blackstar_FootSwitch/Foot_Swich; python3 foot_switch.py
 ```
 
@@ -63,9 +63,6 @@ $ crontab -e
 ||TFT MISO|GPIO 9 (MISO)|Pin 21| Input |
 ||TFT SCK| GPIO 11 (SCK)|Pin 23| Output |
 ||TFT CS|  GPIO 8 (CE0)|Pin 24| Output |
-|I2C Master||||
-||OLED SCL|I2C1 SCL|Pin 5| Output |
-||OLED SDA|I2C1 SDA|Pin 3| Input/Output |
 |Power||||
 ||Common +3v3|3v3 Pwr|Pin 1| N/A |
 ||Common GND|GND|Pin 14| N/A |
