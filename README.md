@@ -66,3 +66,5 @@ $ crontab -e
 |Power||||
 ||Common +3v3|3v3 Pwr|Pin 1| N/A |
 ||Common GND|GND|Pin 14| N/A |
+
+![image](sch.png)

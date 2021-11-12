@@ -205,6 +205,6 @@ while True:
             time.sleep(0)
             pwm_flag = True
             process = subprocess.run(['gpio', '-g', 'mode', '{0}'.format(BACK_LED), 'pwm'])
-            process = subprocess.run(['gpio', '-g', 'pwm', '{0}'.format(BACK_LED), '1024'])
+            process = subprocess.run(['gpio', '-g', 'pwm', '{0}'.format(BACK_LED), '512'])
         refresh_flag = False
     
