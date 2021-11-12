@@ -14,6 +14,10 @@ import Adafruit_GPIO.SPI as SPI
 import adafruit_rgb_display.ili9341 as ili9341
 
 import paho.mqtt.client as mqtt
+import queue
+
+
+update_queue = queue.Queue()
 
 cs_pin = digitalio.DigitalInOut(board.CE0)
 dc_pin = digitalio.DigitalInOut(board.D25)
@@ -83,6 +87,7 @@ x = 4
 pwm_flag = False
 refresh_flag = True
 display = {
+    "gain" : 10,
     "voice" : 5,
     "patch" : "Metal Low",
     "volume" : 8,
@@ -94,13 +99,11 @@ display = {
     "reverb" : 1
 }
 def on_message(client, userdata, message):
-        global display
-        global refresh_flag
+        global update_queue
         try: 
             msg = message.payload.decode()
             update_param = json.loads(msg)
-            display.update(update_param)
-            refresh_flag = True
+            update_queue.put(update_param)
         except Exception as e:
             print(msg + str(e))
 
@@ -126,7 +129,7 @@ target_theme_color = (255, 255, 255)
 outline_color = (255, 255, 255)
 
 font = ImageFont.FreeTypeFont("font/Game Of Squids.otf", size=30)
-font2 = ImageFont.FreeTypeFont("font/PixelOperatorHB.ttf", size=20)
+font2 = ImageFont.FreeTypeFont("font/PixelOperatorHB.ttf", size=18)
 # font2 = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeMonoBold.ttf", 20)
 offset = 4
 text_offset = 8
@@ -134,77 +137,87 @@ text_offset = 8
 voice_list = ['Clean Warm', 'Clean Cool', 'Crunch', 'Super Crunch', 'Over Drive 1', 'Over Drive 2']
 
 while True:
-    if refresh_flag:
-        image = Image.new("RGB", (width, height), bg_color)
-        draw = ImageDraw.Draw(image)
+    if not update_queue.empty():
+        update_param = update_queue.get()
+        update_queue.task_done()
+        if display != update_param:
+            display.update(update_param)
 
-        Patch = display['patch']
-        Voice = voice_list [display['voice']]
-        MOD = display['mod']
-        REV = display['reverb']
-        DEL = display['delay']
+            image = Image.new("RGB", (width, height), bg_color)
+            draw = ImageDraw.Draw(image)
 
-        draw.text(xy= (width/2,(1*height)/4),text=Patch, font=font,anchor='mm', fill= target_theme_color)
-        
-        draw.rectangle(((2*width/3 - offset/2),height/2, width, height), outline=outline_color, width=offset)
-        draw.rectangle((0,height/2, width, height), outline=outline_color, width=offset)
-        draw.rectangle((0,0, width, height), outline=outline_color, width=offset)
-        
-        Vol = "Vol      "
-        Bass = "Bass"
-        Trebble = "Treb"
-        ISF = "ISF"
+            Patch = display['patch']
+            Voice = "Voice:" + voice_list [display['voice']]
+            MOD = display['mod']
+            REV = display['reverb']
+            DEL = display['delay']
 
-        status_bar_width = (2*width/3 - offset * 2)
+            draw.text(xy= (width/2,(1*height)/4),text=Patch, font=font,anchor='mm', fill= target_theme_color)
+            
+            draw.rectangle(((2*width/3 - offset/2),height/2, width, height), outline=outline_color, width=offset)
+            draw.rectangle((0,height/2, width, height), outline=outline_color, width=offset)
+            draw.rectangle((0,0, width, height), outline=outline_color, width=offset)
+            
+            Vol = "Vol      "
+            Gain = "Gain"
+            Bass = "Bass"
+            Trebble = "Treb"
+            ISF = "ISF"
 
-        text_height_start = (height/2) + text_offset
-        draw.text(xy= (text_offset,text_height_start) ,text=Voice, font=font2, fill=target_theme_color)
-        text_height_start += draw.textsize(Voice, font=font2)[1] + 4
+            status_bar_width = (2*width/3 - offset * 2)
 
-        draw.text(xy= (text_offset,text_height_start) ,text=Vol, font=font2, fill=target_theme_color)
-        draw.text(xy= (text_offset + 10+ status_bar_width,text_height_start) ,text="MOD", font=font2,
-                        fill= target_theme_color if MOD else bg_color)
-        next_text_height = draw.textsize(Vol, font=font2)[1]
+            text_height_start = (height/2) + text_offset
+            draw.text(xy= (text_offset,text_height_start) ,text=Voice, font=font2, fill=target_theme_color)
+            text_height_start += draw.textsize(Voice, font=font2)[1] + 4
 
-        rect_width = draw.textsize(Vol, font=font2)[0]
-        fill_width = get_status_bar_fill(display['volume'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
-        draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
-        draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
-        text_height_start += next_text_height
+            draw.text(xy= (text_offset,text_height_start) ,text=Vol, font=font2, fill=target_theme_color)
+            draw.text(xy= (text_offset + 10+ status_bar_width,text_height_start) ,text="MOD", font=font2,
+                            fill= target_theme_color if MOD else bg_color)
+            next_text_height = draw.textsize(Vol, font=font2)[1]
 
-        draw.text(xy= (text_offset,text_height_start) ,text=Bass, font=font2, fill=target_theme_color)
-        draw.text(xy= (text_offset + 10+ status_bar_width,text_height_start) ,text="DELAY", font=font2,
-                        fill= target_theme_color if DEL else bg_color)
-        rect_width = draw.textsize(Vol, font=font2)[0]
-        fill_width = get_status_bar_fill(display['bass'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
-        draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
-        draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
-        text_height_start += draw.textsize(Bass, font=font2)[1]
+            rect_width = draw.textsize(Vol, font=font2)[0]
+            fill_width = get_status_bar_fill(display['volume'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
+            draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
+            draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
+            text_height_start += next_text_height
 
-        draw.text(xy= (text_offset,text_height_start) ,text=Trebble, font=font2, fill=target_theme_color)
-        draw.text(xy= (text_offset + 10+ status_bar_width,text_height_start) ,text="REVERB", font=font2,
-                        fill= target_theme_color if REV else bg_color)
+            draw.text(xy= (text_offset,text_height_start) ,text=Gain, font=font2, fill=target_theme_color)
+            rect_width = draw.textsize(Vol, font=font2)[0]
+            fill_width = get_status_bar_fill(display['gain'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
+            draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
+            draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
+            text_height_start += draw.textsize(Bass, font=font2)[1]
+            
+            draw.text(xy= (text_offset,text_height_start) ,text=Bass, font=font2, fill=target_theme_color)
+            draw.text(xy= (text_offset + 10+ status_bar_width,text_height_start) ,text="DELAY", font=font2,
+                            fill= target_theme_color if DEL else bg_color)
+            rect_width = draw.textsize(Vol, font=font2)[0]
+            fill_width = get_status_bar_fill(display['bass'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
+            draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
+            draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
+            text_height_start += draw.textsize(Bass, font=font2)[1]
 
-        rect_width = draw.textsize(Vol, font=font2)[0]
-        fill_width = get_status_bar_fill(display['treble'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
-        draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
-        draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
+            draw.text(xy= (text_offset,text_height_start) ,text=Trebble, font=font2, fill=target_theme_color)
+            draw.text(xy= (text_offset + 10+ status_bar_width,text_height_start) ,text="REVERB", font=font2,
+                            fill= target_theme_color if REV else bg_color)
 
-        text_height_start += draw.textsize(Trebble, font=font2)[1]
+            rect_width = draw.textsize(Vol, font=font2)[0]
+            fill_width = get_status_bar_fill(display['treble'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
+            draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
+            draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
 
-        draw.text(xy= (text_offset,text_height_start) ,text=ISF, font=font2, fill=target_theme_color)
-        rect_width = draw.textsize(Vol, font=font2)[0]
-        fill_width = get_status_bar_fill(display['isf'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
-        draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
-        draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
+            text_height_start += draw.textsize(Trebble, font=font2)[1]
 
-        text_height_start += draw.textsize(ISF, font=font2)[1]
+            draw.text(xy= (text_offset,text_height_start) ,text=ISF, font=font2, fill=target_theme_color)
+            rect_width = draw.textsize(Vol, font=font2)[0]
+            fill_width = get_status_bar_fill(display['isf'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
+            draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
+            draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
 
-        disp.image(image)
-        if not pwm_flag:
-            time.sleep(0)
-            pwm_flag = True
-            process = subprocess.run(['gpio', '-g', 'mode', '{0}'.format(BACK_LED), 'pwm'])
-            process = subprocess.run(['gpio', '-g', 'pwm', '{0}'.format(BACK_LED), '512'])
-        refresh_flag = False
-    
+            text_height_start += draw.textsize(ISF, font=font2)[1]
+
+            disp.image(image)
+            if not pwm_flag:
+                pwm_flag = True
+                process = subprocess.run(['gpio', '-g', 'mode', '{0}'.format(BACK_LED), 'pwm'])
+                process = subprocess.run(['gpio', '-g', 'pwm', '{0}'.format(BACK_LED), '512'])

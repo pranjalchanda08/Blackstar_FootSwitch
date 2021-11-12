@@ -7,8 +7,8 @@
         "delay_time": 512,
         "delay_type": 0,
         "fx_focus": 3,
-        "gain": 9,
-        "isf": 7.9,
+        "gain": 8.9,
+        "isf": 5,
         "master_volume": 0,
         "middle": 3.9,
         "mod_level": 3,
@@ -26,8 +26,8 @@
         "treble": 5,
         "tvp_switch": 1,
         "tvp_valve": 0,
-        "voice": 1,
-        "volume": 7.5
+        "voice": 0,
+        "volume": 6.9
     },
-    "name": "Clean_Cool"
+    "name": "Clean Cool"
 }

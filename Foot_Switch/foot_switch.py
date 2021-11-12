@@ -176,7 +176,7 @@ class foot_switch():
             
 
         elif bcm_pin == self.FS_BUTTON_DICT['Pins']['FS_PATCH_DOWN']:
-            self.FS_BUTTON_DICT['Patch_index'] += 1
+            self.FS_BUTTON_DICT['Patch_index'] -= 1
             self.FS_BUTTON_DICT['Patch_index'] %= self.FS_BUTTON_DICT['Patch_len']
             self.FS_BUTTON_DICT['Patch_len'], self.FS_BUTTON_DICT['Patch_name'] = \
                 self.set_preset_index(self.FS_BUTTON_DICT['Patch_index'])
