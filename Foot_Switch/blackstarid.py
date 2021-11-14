@@ -1003,7 +1003,6 @@ if __name__ == '__main__':
     import logging
     import sys
     import time
-    from beeprint import pp
 
     logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger('Blackstar')
@@ -1014,7 +1013,7 @@ if __name__ == '__main__':
         amp.set_control('voice', control)
         ret = amp.read_data()
         print("Return Packet: ")
-        pp(ret)
+        print(ret)
         time.sleep(2)
 
     try:

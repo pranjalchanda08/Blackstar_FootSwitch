@@ -4,12 +4,12 @@
             "path": "Patches/Clean_Cool.json",
             "selected": true
         },
-        "Metal low": {
-            "path": "Patches/Metal_low.json",
-            "selected": false
-        },
         "Default": {
             "path": "json/default.json",
+            "selected": false
+        },
+        "Metal low": {
+            "path": "Patches/Metal_low.json",
             "selected": false
         }
     }

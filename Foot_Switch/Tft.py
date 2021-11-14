@@ -123,7 +123,7 @@ def get_status_bar_fill(val, width_start, width_end, sections, scale:tuple):
     res_width = section_width * val
     return width_start + res_width
 
-bg_color = (198, 71, 86) #(20,47,67)
+bg_color = 0 #(198, 71, 86) #(20,47,67)
 status_bar_outline = bg_color
 target_theme_color = (255, 255, 255)
 outline_color = (255, 255, 255)
@@ -134,7 +134,7 @@ font2 = ImageFont.FreeTypeFont("font/PixelOperatorHB.ttf", size=18)
 offset = 4
 text_offset = 8
 
-voice_list = ['Clean Warm', 'Clean Cool', 'Crunch', 'Super Crunch', 'Over Drive 1', 'Over Drive 2']
+voice_list = ['Clean Warm', 'Clean Bright', 'Crunch', 'Super Crunch', 'Over Drive 1', 'Over Drive 2']
 
 while True:
     if not update_queue.empty():
@@ -169,25 +169,26 @@ while True:
             text_height_start = (height/2) + text_offset
             draw.text(xy= (text_offset,text_height_start) ,text=Voice, font=font2, fill=target_theme_color)
             text_height_start += draw.textsize(Voice, font=font2)[1] + 4
-
-            draw.text(xy= (text_offset,text_height_start) ,text=Vol, font=font2, fill=target_theme_color)
-            draw.text(xy= (text_offset + 10+ status_bar_width,text_height_start) ,text="MOD", font=font2,
-                            fill= target_theme_color if MOD else bg_color)
+            
             next_text_height = draw.textsize(Vol, font=font2)[1]
-
-            rect_width = draw.textsize(Vol, font=font2)[0]
-            fill_width = get_status_bar_fill(display['volume'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
-            draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
-            draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
-            text_height_start += next_text_height
-
+            
             draw.text(xy= (text_offset,text_height_start) ,text=Gain, font=font2, fill=target_theme_color)
             rect_width = draw.textsize(Vol, font=font2)[0]
             fill_width = get_status_bar_fill(display['gain'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
             draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
             draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
             text_height_start += draw.textsize(Bass, font=font2)[1]
+
+            draw.text(xy= (text_offset,text_height_start) ,text=Vol, font=font2, fill=target_theme_color)
+            draw.text(xy= (text_offset + 10+ status_bar_width,text_height_start) ,text="MOD", font=font2,
+                            fill= target_theme_color if MOD else bg_color)
             
+            rect_width = draw.textsize(Vol, font=font2)[0]
+            fill_width = get_status_bar_fill(display['volume'], (rect_width + 1), status_bar_width, 100, scale=(0,10))
+            draw.rectangle((rect_width,text_height_start, 2*width/3 - offset * 2, text_height_start + next_text_height), outline=status_bar_outline, width=1)
+            draw.rectangle((rect_width + 1,text_height_start + 1, fill_width, text_height_start - 1 + next_text_height), fill=target_theme_color, width=1)
+            text_height_start += next_text_height
+
             draw.text(xy= (text_offset,text_height_start) ,text=Bass, font=font2, fill=target_theme_color)
             draw.text(xy= (text_offset + 10+ status_bar_width,text_height_start) ,text="DELAY", font=font2,
                             fill= target_theme_color if DEL else bg_color)

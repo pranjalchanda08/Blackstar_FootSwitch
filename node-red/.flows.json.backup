@@ -1031,34 +1031,6 @@
         ]
     },
     {
-        "id": "56f3151a.1d7a24",
-        "type": "python3-function",
-        "z": "6a1fd15f.c993f8",
-        "name": "Read Json control file",
-        "func": "import json\nimport os\n\nCWD= '/home/pi/Blackstar_FootSwitch/Foot_Switch/'  \n\ndef get_selected_preset():\n    \"\"\"\n        Get patch that is selected\n    \"\"\"\n    file = os.path.join(CWD, \"json/patch.json\")\n    with open(file, 'r') as patch_json_file:\n        file_patch = json.load(patch_json_file)\n    for patch in file_patch['patches']:\n        if file_patch['patches'][patch]['selected'] is True:\n            preset_name = patch\n            return preset_name, file_patch['patches'][preset_name]['path']\n\npatch_name, patch_path = get_selected_preset()\n\nfile = os.path.join(CWD, patch_path)\n\nwith open(file, 'r') as patch_json:\n    patch_dict = json.load(patch_json)\n\nmsg['topic'] = patch_name\nmsg['payload'] = patch_dict\n\nreturn msg",
-        "outputs": 1,
-        "x": 280,
-        "y": 320,
-        "wires": [
-            [
-                "6ddbc5cb.0bb264",
-                "d2098514.f38ae8",
-                "d380a081.16181",
-                "f8396ac1.f8ca6",
-                "42ba86ff.8a0598",
-                "6d489027.4c77d8",
-                "2a370748.43dbb",
-                "3a956eac.9d9d0a",
-                "dcb62eb2.93ffa",
-                "19f16bbc.819114",
-                "58a34549.89d6ec",
-                "f6267513.30335",
-                "6a96caef.f4b584",
-                "ed7763af.ef6308"
-            ]
-        ]
-    },
-    {
         "id": "7e8ceaf.0f30894",
         "type": "python3-function",
         "z": "6a1fd15f.c993f8",
@@ -1380,7 +1352,7 @@
         "type": "python3-function",
         "z": "6a1fd15f.c993f8",
         "name": "Display MQTT control",
-        "func": "payload = {\n    \"gain\" : 10,\n    \"voice\" : 5,\n    \"patch\" : \"Metal Low\",\n    \"volume\" : 8,\n    \"isf\" : 9, \n    \"bass\" : 5,\n    \"treble\" : 3,\n    \"mod\": 1,\n    \"delay\" : 1,\n    \"reverb\" : 1\n}\n\npayload['voice'] = msg['payload']['Control']['gain']\npayload['voice'] = msg['payload']['Control']['voice']\npayload['volume'] = msg['payload']['Control']['volume']\npayload['isf'] = msg['payload']['Control']['isf']\npayload['bass'] = msg['payload']['Control']['bass']\npayload['treble'] = msg['payload']['Control']['treble']\npayload['mod'] = msg['payload']['Control']['mod_switch']\npayload['delay'] = msg['payload']['Control']['delay_switch']\npayload['reverb'] = msg['payload']['Control']['reverb_switch']\npayload['patch'] = msg['topic']\n\nmsg['payload'] = payload\nreturn msg",
+        "func": "payload = {\n    \"gain\" : 10,\n    \"voice\" : 5,\n    \"patch\" : \"Metal Low\",\n    \"volume\" : 8,\n    \"isf\" : 9, \n    \"bass\" : 5,\n    \"treble\" : 3,\n    \"mod\": 1,\n    \"delay\" : 1,\n    \"reverb\" : 1\n}\n\npayload['gain'] = msg['payload']['Control']['gain']\npayload['voice'] = msg['payload']['Control']['voice']\npayload['volume'] = msg['payload']['Control']['volume']\npayload['isf'] = msg['payload']['Control']['isf']\npayload['bass'] = msg['payload']['Control']['bass']\npayload['treble'] = msg['payload']['Control']['treble']\npayload['mod'] = msg['payload']['Control']['mod_switch']\npayload['delay'] = msg['payload']['Control']['delay_switch']\npayload['reverb'] = msg['payload']['Control']['reverb_switch']\npayload['patch'] = msg['topic']\n\nmsg['payload'] = payload\nreturn msg",
         "outputs": 1,
         "x": 560,
         "y": 200,
@@ -1542,21 +1514,6 @@
         "x": 70,
         "y": 320,
         "wires": [
-            [
-                "ceadccd1854b53aa"
-            ]
-        ]
-    },
-    {
-        "id": "ceadccd1854b53aa",
-        "type": "python3-function",
-        "z": "6a1fd15f.c993f8",
-        "name": "Read Json control file",
-        "func": "import json\nimport os\n\nCWD= '/home/pi/Blackstar_FootSwitch/Foot_Switch/'  \n\ndef get_selected_preset():\n    \"\"\"\n        Get patch that is selected\n    \"\"\"\n    file = os.path.join(CWD, \"json/patch.json\")\n    with open(file, 'r') as patch_json_file:\n        file_patch = json.load(patch_json_file)\n    for patch in file_patch['patches']:\n        if file_patch['patches'][patch]['selected'] is True:\n            preset_name = patch\n            return preset_name, file_patch['patches'][preset_name]['path']\n\npatch_name, patch_path = get_selected_preset()\n\nfile = os.path.join(CWD, patch_path)\n\nwith open(file, 'r') as patch_json:\n    patch_dict = json.load(patch_json)\n\nmsg['topic'] = patch_name\nmsg['payload'] = patch_dict\n\nreturn msg",
-        "outputs": 1,
-        "x": 280,
-        "y": 320,
-        "wires": [
             []
         ]
     },
@@ -1583,21 +1540,6 @@
         "x": 70,
         "y": 320,
         "wires": [
-            [
-                "548a4754a1baaabd"
-            ]
-        ]
-    },
-    {
-        "id": "548a4754a1baaabd",
-        "type": "python3-function",
-        "z": "6a1fd15f.c993f8",
-        "name": "Read Json control file",
-        "func": "import json\nimport os\n\nCWD= '/home/pi/Blackstar_FootSwitch/Foot_Switch/'  \n\ndef get_selected_preset():\n    \"\"\"\n        Get patch that is selected\n    \"\"\"\n    file = os.path.join(CWD, \"json/patch.json\")\n    with open(file, 'r') as patch_json_file:\n        file_patch = json.load(patch_json_file)\n    for patch in file_patch['patches']:\n        if file_patch['patches'][patch]['selected'] is True:\n            preset_name = patch\n            return preset_name, file_patch['patches'][preset_name]['path']\n\npatch_name, patch_path = get_selected_preset()\n\nfile = os.path.join(CWD, patch_path)\n\nwith open(file, 'r') as patch_json:\n    patch_dict = json.load(patch_json)\n\nmsg['topic'] = patch_name\nmsg['payload'] = patch_dict\n\nreturn msg",
-        "outputs": 1,
-        "x": 280,
-        "y": 320,
-        "wires": [
             []
         ]
     },
@@ -1615,7 +1557,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "2",
+        "repeat": "0.1",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -1624,90 +1566,35 @@
         "x": 70,
         "y": 320,
         "wires": [
-            [
-                "57b802c000f7f13f"
-            ]
-        ]
-    },
-    {
-        "id": "57b802c000f7f13f",
-        "type": "python3-function",
-        "z": "6a1fd15f.c993f8",
-        "name": "Read Json control file",
-        "func": "import json\nimport os\n\nCWD= '/home/pi/Blackstar_FootSwitch/Foot_Switch/'  \n\ndef get_selected_preset():\n    \"\"\"\n        Get patch that is selected\n    \"\"\"\n    file = os.path.join(CWD, \"json/patch.json\")\n    with open(file, 'r') as patch_json_file:\n        file_patch = json.load(patch_json_file)\n    for patch in file_patch['patches']:\n        if file_patch['patches'][patch]['selected'] is True:\n            preset_name = patch\n            return preset_name, file_patch['patches'][preset_name]['path']\n\npatch_name, patch_path = get_selected_preset()\n\nfile = os.path.join(CWD, patch_path)\n\nwith open(file, 'r') as patch_json:\n    patch_dict = json.load(patch_json)\n\nmsg['topic'] = patch_name\nmsg['payload'] = patch_dict\n\nreturn msg",
-        "outputs": 1,
-        "x": 280,
-        "y": 320,
-        "wires": [
             []
         ]
     },
     {
-        "id": "e689c927ea424188",
+        "id": "56f3151a.1d7a24",
         "type": "python3-function",
         "z": "6a1fd15f.c993f8",
         "name": "Read Json control file",
-        "func": "import json\nimport os\n\nCWD= '/home/pi/Blackstar_FootSwitch/Foot_Switch/'  \n\ndef get_selected_preset():\n    \"\"\"\n        Get patch that is selected\n    \"\"\"\n    file = os.path.join(CWD, \"json/patch.json\")\n    with open(file, 'r') as patch_json_file:\n        file_patch = json.load(patch_json_file)\n    for patch in file_patch['patches']:\n        if file_patch['patches'][patch]['selected'] is True:\n            preset_name = patch\n            return preset_name, file_patch['patches'][preset_name]['path']\n\npatch_name, patch_path = get_selected_preset()\n\nfile = os.path.join(CWD, patch_path)\n\nwith open(file, 'r') as patch_json:\n    patch_dict = json.load(patch_json)\n\nmsg['topic'] = patch_name\nmsg['payload'] = patch_dict\n\nreturn msg",
+        "func": "import json\nimport os\n\nCWD= '/home/pi/Blackstar_FootSwitch/Foot_Switch/'  \n\ndef get_selected_preset():\n    \"\"\"\n        Get patch that is selected\n    \"\"\"\n    file = os.path.join(CWD, \"json/patch.json\")\n    with open(file, 'r') as patch_json_file:\n        file_patch = json.load(patch_json_file)\n    for patch in file_patch['patches']:\n        if file_patch['patches'][patch]['selected'] is True:\n            preset_name = patch\n            return preset_name, file_patch['patches'][preset_name]['path']\n\npatch_name, patch_path = get_selected_preset()\n\nif os.path.isfile(os.path.join(CWD, \"json/patch.json.lock\")):\n    return None\n\nfile = os.path.join(CWD, patch_path)\n\nwith open(file, 'r') as patch_json:\n    patch_dict = json.load(patch_json)\n\nmsg['topic'] = patch_name\nmsg['payload'] = patch_dict\n\nreturn msg",
         "outputs": 1,
         "x": 280,
         "y": 320,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "41a7d44f40453041",
-        "type": "python3-function",
-        "z": "6a1fd15f.c993f8",
-        "name": "Read Json control file",
-        "func": "import json\nimport os\n\nCWD= '/home/pi/Blackstar_FootSwitch/Foot_Switch/'  \n\ndef get_selected_preset():\n    \"\"\"\n        Get patch that is selected\n    \"\"\"\n    file = os.path.join(CWD, \"json/patch.json\")\n    with open(file, 'r') as patch_json_file:\n        file_patch = json.load(patch_json_file)\n    for patch in file_patch['patches']:\n        if file_patch['patches'][patch]['selected'] is True:\n            preset_name = patch\n            return preset_name, file_patch['patches'][preset_name]['path']\n\npatch_name, patch_path = get_selected_preset()\n\nfile = os.path.join(CWD, patch_path)\n\nwith open(file, 'r') as patch_json:\n    patch_dict = json.load(patch_json)\n\nmsg['topic'] = patch_name\nmsg['payload'] = patch_dict\n\nreturn msg",
-        "outputs": 1,
-        "x": 280,
-        "y": 320,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "39e384d97413827b",
-        "type": "python3-function",
-        "z": "6a1fd15f.c993f8",
-        "name": "",
-        "func": "import json\nimport os\n\nCWD= '/home/pi/Blackstar_FootSwitch/Foot_Switch/'  \n\ndef get_selected_preset():\n    \"\"\"\n        Get patch that is selected\n    \"\"\"\n    file = os.path.join(CWD, \"json/patch.json\")\n    with open(file, 'r') as patch_json_file:\n        file_patch = json.load(patch_json_file)\n    for patch in file_patch['patches']:\n        if file_patch['patches'][patch]['selected'] is True:\n            preset_name = patch\n            return preset_name, file_patch['patches'][preset_name]['path']\n\npatch_name, patch_path = get_selected_preset()\n\nfile = os.path.join(CWD, patch_path)\n\nwith open(file, 'r') as patch_json:\n    patch_dict = json.load(patch_json)\n\nmsg['topic'] = patch_name\nmsg['payload'] = patch_dict\n\nreturn msg",
-        "outputs": 1,
-        "x": 260,
-        "y": 200,
         "wires": [
             [
+                "6ddbc5cb.0bb264",
+                "d2098514.f38ae8",
+                "d380a081.16181",
+                "f8396ac1.f8ca6",
+                "42ba86ff.8a0598",
+                "6d489027.4c77d8",
+                "2a370748.43dbb",
+                "3a956eac.9d9d0a",
+                "dcb62eb2.93ffa",
+                "19f16bbc.819114",
+                "58a34549.89d6ec",
+                "f6267513.30335",
+                "6a96caef.f4b584",
+                "ed7763af.ef6308",
                 "cea4adcc7ddbd5bc"
-            ]
-        ]
-    },
-    {
-        "id": "eb97a96fd16229a0",
-        "type": "inject",
-        "z": "6a1fd15f.c993f8",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "0.1",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "date",
-        "x": 120,
-        "y": 140,
-        "wires": [
-            [
-                "39e384d97413827b"
             ]
         ]
     }

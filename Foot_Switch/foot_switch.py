@@ -11,7 +11,7 @@ import paho.mqtt.client as mqtt
 
 THREAD_EXIT = False
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.NOTSET)
 logger = logging.getLogger(" FootSwitch ")
 
 class foot_switch():
@@ -29,7 +29,19 @@ class foot_switch():
         "Control" : {},
         "Control_save" : {},
         "Patch_index" : -1,
-        "Patch_len": 0
+        "Patch_len": 0,
+        "disp_payload" : {
+            "gain" : 10,
+            "voice" : 5,
+            "patch" : "Metal Low",
+            "volume" : 8,
+            "isf" : 9, 
+            "bass" : 5,
+            "treble" : 3,
+            "mod": 1,
+            "delay" : 1,
+            "reverb" : 1
+        }
     }
 
     def __init__(self, logger, mqtt_client):
@@ -71,6 +83,12 @@ class foot_switch():
         self.close()
 
     def oled_display(self, string):
+        self.mqtt_client.publish(topic='Footswitch/Display', 
+                                    payload=string,
+                                    qos=1, 
+                                    retain=True) 
+    def TFT_display(self, dict):
+        string = json.dumps(dict)
         self.mqtt_client.publish(topic='Footswitch/Display', 
                                     payload=string,
                                     qos=1, 
@@ -116,15 +134,27 @@ class foot_switch():
                 with open(json_file_path, 'r') as json_file:
                     file_dict = json.load(json_file)
                     file_dict['Control'].update(self.FS_BUTTON_DICT['Control_save'])
-                with open(json_file_path, 'w') as json_file:
-                    json.dump(file_dict, json_file, sort_keys=True, indent=4)
+                    human_readable = self.patch_range_human_to_device(self.FS_BUTTON_DICT['Control'], False)
+                    self.FS_BUTTON_DICT['disp_payload']['gain'] =   human_readable['gain']
+                    self.FS_BUTTON_DICT['disp_payload']['voice'] =  human_readable['voice']
+                    self.FS_BUTTON_DICT['disp_payload']['volume'] = human_readable['volume']
+                    self.FS_BUTTON_DICT['disp_payload']['isf'] =    human_readable['isf']
+                    self.FS_BUTTON_DICT['disp_payload']['bass'] =   human_readable['bass']
+                    self.FS_BUTTON_DICT['disp_payload']['treble'] = human_readable['treble']
+                    self.FS_BUTTON_DICT['disp_payload']['mod'] =    human_readable['mod_switch']
+                    self.FS_BUTTON_DICT['disp_payload']['delay'] =  human_readable['delay_switch']
+                    self.FS_BUTTON_DICT['disp_payload']['reverb'] = human_readable['reverb_switch']
+                    self.FS_BUTTON_DICT['disp_payload']['patch'] =  self.FS_BUTTON_DICT['Patch_name']
+                    self.TFT_display(self.FS_BUTTON_DICT['disp_payload'])
+                with open(json_file_path + ".lock", 'w'):
+                    with open(json_file_path, 'w') as json_file:
+                        json.dump(file_dict, json_file, sort_keys=True, indent=4)
                 
-                self.mqtt_client.publish(topic='Footswitch/PatchSelected', 
-                                    payload=self.FS_BUTTON_DICT['Patch_name'],
-                                    qos=1, 
-                                    retain=True)
-                self.oled_display(self.FS_BUTTON_DICT['Patch_name'])
-                
+                    self.mqtt_client.publish(topic='Footswitch/PatchSelected', 
+                                        payload=self.FS_BUTTON_DICT['Patch_name'],
+                                        qos=1, 
+                                        retain=True)
+                os.remove(os.path.abspath(json_file_path + ".lock"))
                 self.FS_BUTTON_DICT['Control_save'] = {}
             try:
                 if self.task_q.empty() == False:
@@ -327,8 +357,12 @@ def on_message(client, userdata, message):
     """
         MQTT on_message callback
     """
-    msg_json = json.loads(message.payload.decode('utf-8'))
+    try:
+        msg_json = json.loads(message.payload.decode('utf-8'))
+    except:
+        pass
     if message.topic == 'Footswitch/Patch':
+        print(msg_json)
         fs.fs_but_callback(msg_json['bcm_pin'])
     else:
         mqtt_task_q.put_nowait(msg_json)
