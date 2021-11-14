@@ -15,7 +15,7 @@
         "mod_manual": 5,
         "mod_segval": 10,
         "mod_speed": 3,
-        "mod_switch": 1,
+        "mod_switch": 0,
         "mod_type": 0,
         "presence": 3,
         "resonance": 3.9,
