@@ -12,5 +12,7 @@ cd ../Adafruit_Python_ILI9341
 sudo python3 setup.py install
 cd ../Adafruit_CircuitPython_RGB_Display
 sudo python3 setup.py install
+cd ../Foot_Switch
+sudo cp -a blackstar-id.rules /etc/udev/rules.d/69-blackstar-id.rules
 git config --global user.email "pranjalchanda08@gmail.com"
 git config --global user.name "Pranjal"

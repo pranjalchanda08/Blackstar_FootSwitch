@@ -1,14 +1,14 @@
 {
     "Control": {
-        "bass": 8.2,
-        "delay_feedback": 0,
-        "delay_level": 0,
-        "delay_switch": 1,
+        "bass": 6.8,
+        "delay_feedback": 10,
+        "delay_level": 3.9,
+        "delay_switch": 0,
         "delay_time": 512,
         "delay_type": 0,
-        "fx_focus": 3,
-        "gain": 8.3,
-        "isf": 6.5,
+        "fx_focus": 0,
+        "gain": 7.9,
+        "isf": 2.5,
         "master_volume": 0,
         "middle": 4.3,
         "mod_level": 3.9,
@@ -21,13 +21,13 @@
         "resonance": 10,
         "reverb_level": 3.9,
         "reverb_size": 10,
-        "reverb_switch": 1,
+        "reverb_switch": 0,
         "reverb_type": 0,
-        "treble": 3.5,
+        "treble": 2.3,
         "tvp_switch": 1,
-        "tvp_valve": 0,
-        "voice": 0,
+        "tvp_valve": 4,
+        "voice": 4,
         "volume": 5.6
     },
-    "name": "default"
+    "name": "Heavy Metal"
 }

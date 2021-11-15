@@ -67,7 +67,8 @@ class foot_switch():
             ret, len = self.set_selected_preset()
             if ret >= 0 :
                 self.FS_BUTTON_DICT['Patch_index'], self.FS_BUTTON_DICT['Patch_len'] = ret, len
-
+        else:
+            logger.error("Failed to connect!")
     def close(self):
         try:
             self.alive = False

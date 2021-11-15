@@ -400,7 +400,7 @@ class BlackstarIDAmp(object):
         dev = devices[0]
         logger.debug('Device:\n' + str(dev))
 
-        dev.reset()
+        # dev.reset()
 
         # We know for this device there's only one configuration, so
         # no need to iterate through configurations below.
@@ -973,6 +973,7 @@ class BlackstarIDAmp(object):
                      + self._format_data(ret))
     
     def reset_usb(self):
+        return
         retry = 3
         while retry:
             pipe = subprocess.run(['usbreset', 'ID:Core Amplifier'])
@@ -995,8 +996,11 @@ class BlackstarIDAmp(object):
                 except:
                     pass
                 time.sleep(1)
-            self.drain()
-            self.startup()
+            if self.device is not None:
+                self.drain()
+                self.startup()
+            else:
+                return False
         return self.connected
     
 if __name__ == '__main__':

@@ -8,6 +8,10 @@
             "path": "json/default.json",
             "selected": false
         },
+        "Heavy Metal": {
+            "path": "Patches/Metal_OD1.json",
+            "selected": false
+        },
         "Metal low": {
             "path": "Patches/Metal_low.json",
             "selected": false

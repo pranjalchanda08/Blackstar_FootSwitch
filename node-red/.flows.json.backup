@@ -1,5 +1,13 @@
 [
     {
+        "id": "bf58044a85ff5f7a",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "a2e75c0869444666",
         "type": "tab",
         "label": "Flow 1",
@@ -301,7 +309,7 @@
         },
         "site": {
             "name": "Node-RED Dashboard",
-            "hideToolbar": "false",
+            "hideToolbar": "true",
             "allowSwipe": "false",
             "lockMenu": "false",
             "allowTempTheme": "true",
