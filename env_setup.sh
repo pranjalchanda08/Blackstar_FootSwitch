@@ -1,5 +1,7 @@
 sudo apt update -y && sudo apt install mosquitto mosquitto-clients -y
-sudo apt-get install -y python3-setuptools
+sudo apt-get install -y python3-setuptools python3-pip wiringpi
+sudo pip3 install Adafruit-GPIO
+sudo pip3 install pillow --upgrade
 cd pyusb
 sudo python3 setup.py install
 sudo pip3 install paho-mqtt

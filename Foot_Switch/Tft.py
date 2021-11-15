@@ -53,7 +53,7 @@ disp.begin()
 disp.clear((0, 0, 0))
 disp.display()
 
-# time.sleep(1)
+time.sleep(1)
 
 disp = ili9341.ILI9341(
     spi,
@@ -142,7 +142,7 @@ while True:
         update_queue.task_done()
         if display != update_param:
             display.update(update_param)
-
+            
             image = Image.new("RGB", (width, height), bg_color)
             draw = ImageDraw.Draw(image)
 
@@ -221,4 +221,4 @@ while True:
             if not pwm_flag:
                 pwm_flag = True
                 process = subprocess.run(['gpio', '-g', 'mode', '{0}'.format(BACK_LED), 'pwm'])
-                process = subprocess.run(['gpio', '-g', 'pwm', '{0}'.format(BACK_LED), '512'])
+                process = subprocess.run(['gpio', '-g', 'pwm', '{0}'.format(BACK_LED), '512'])`
