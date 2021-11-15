@@ -11,6 +11,10 @@
         "Metal low": {
             "path": "Patches/Metal_low.json",
             "selected": false
+        },
+        "Punk": {
+            "path": "Patches/Punk.json",
+            "selected": false
         }
     }
 }

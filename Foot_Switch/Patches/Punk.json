@@ -1,0 +1,33 @@
+{
+    "Control": {
+        "bass": 7.9,
+        "delay_feedback": 18,
+        "delay_level": 3,
+        "delay_switch": 1,
+        "delay_time": 512,
+        "delay_type": 1,
+        "fx_focus": 2,
+        "gain": 8,
+        "isf": 7.2,
+        "master_volume": 0,
+        "middle": 3.9,
+        "mod_level": 3,
+        "mod_manual": 5,
+        "mod_segval": 10,
+        "mod_speed": 3,
+        "mod_switch": 0,
+        "mod_type": 0,
+        "presence": 3,
+        "resonance": 3.9,
+        "reverb_level": 8,
+        "reverb_size": 17,
+        "reverb_switch": 1,
+        "reverb_type": 1,
+        "treble": 5,
+        "tvp_switch": 1,
+        "tvp_valve": 0,
+        "voice": 1,
+        "volume": 5.7
+    },
+    "name": "Punk"
+}

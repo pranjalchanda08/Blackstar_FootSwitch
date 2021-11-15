@@ -1,0 +1,31 @@
+# This file is part of Outsider.
+#
+# Outsider is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Outsider is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Outsider.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Copyright 2015, Jonathan Underwood. All rights reserved.
+
+# Rule specific to ID-TVP amps
+# SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
+#    ATTRS{idVendor}=="27d4", ATTRS{idProduct}=="0001", \
+#    TAG+="uaccess"
+
+# Rule specific to ID-core amps
+# SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
+#    ATTRS{idVendor}=="27d4", ATTRS{idProduct}=="0010", \
+#    TAG+="uaccess"
+
+# Rule for all ID amps
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", \
+   ATTRS{idVendor}=="27d4", \
+   TAG+="uaccess"
