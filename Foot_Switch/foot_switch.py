@@ -394,19 +394,23 @@ def main_thread_entry(name):
             logger.error(" Json decode error occured! " + str(e))
     logger.info(" Main Thread Killed!")
 
-# try:
-mqtt_task_q = queue.Queue()
-main_task = threading.Thread(target=main_thread_entry, args=(1,))
-main_task.start()
-client = mqtt.Client("LocalHost")
-client.connect("localhost")
-client.subscribe("Footswitch/Control")
-client.subscribe("Footswitch/Patch")
-client.on_message = on_message
-client.on_connect = on_connect
-fs = foot_switch(logger=logger, mqtt_client=client)
-signal.signal(signal.SIGINT, ctrl_c_handler)
-signal.signal(signal.SIGTERM, ctrl_c_handler)
-client.loop_start()
-# except Exception as e:
-#     logger.error(" Exception in Parent thread: " + str(e))
+try:
+    mqtt_task_q = queue.Queue()
+    main_task = threading.Thread(target=main_thread_entry, args=(1,))
+    main_task.start()
+    client = mqtt.Client("LocalHost")
+    client.connect("localhost")
+    client.subscribe("Footswitch/Control")
+    client.subscribe("Footswitch/Patch")
+    client.on_message = on_message
+    client.on_connect = on_connect
+    try:
+        fs = foot_switch(logger=logger, mqtt_client=client)
+    except Exception as e:
+        logger.error(" Exception in Parent thread: " + str(e))
+        ctrl_c_handler(0,0)
+    signal.signal(signal.SIGINT, ctrl_c_handler)
+    signal.signal(signal.SIGTERM, ctrl_c_handler)
+    client.loop_start()
+except Exception as e:
+    logger.error(" Exception in Parent thread: " + str(e))

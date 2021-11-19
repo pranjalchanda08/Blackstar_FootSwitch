@@ -3,12 +3,12 @@
         "bass": 6.8,
         "delay_feedback": 10,
         "delay_level": 3.9,
-        "delay_switch": 0,
+        "delay_switch": 1,
         "delay_time": 512,
         "delay_type": 0,
         "fx_focus": 0,
         "gain": 7.9,
-        "isf": 2.5,
+        "isf": 2.4,
         "master_volume": 0,
         "middle": 4.3,
         "mod_level": 3.9,
@@ -27,7 +27,7 @@
         "tvp_switch": 1,
         "tvp_valve": 4,
         "voice": 4,
-        "volume": 5.6
+        "volume": 4.9
     },
     "name": "Heavy Metal"
 }

@@ -1378,7 +1378,7 @@
         "name": "",
         "topic": "Footswitch/Patch",
         "qos": "1",
-        "retain": "true",
+        "retain": "false",
         "respTopic": "",
         "contentType": "",
         "userProps": "",

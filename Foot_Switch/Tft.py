@@ -57,7 +57,7 @@ time.sleep(1)
 
 disp = ili9341.ILI9341(
     spi,
-    rotation=90,  # 2.2", 2.4", 2.8", 3.2" ILI9341
+    rotation=270,  # 2.2", 2.4", 2.8", 3.2" ILI9341
     cs=cs_pin,
     dc=dc_pin,
     rst=reset_pin,
@@ -221,4 +221,4 @@ while True:
             if not pwm_flag:
                 pwm_flag = True
                 process = subprocess.run(['gpio', '-g', 'mode', '{0}'.format(BACK_LED), 'pwm'])
-                process = subprocess.run(['gpio', '-g', 'pwm', '{0}'.format(BACK_LED), '512'])
+                process = subprocess.run(['gpio', '-g', 'pwm', '{0}'.format(BACK_LED), '1024'])

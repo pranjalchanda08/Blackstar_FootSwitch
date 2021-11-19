@@ -2,7 +2,7 @@
     "patches": {
         "Clean Cool": {
             "path": "Patches/Clean_Cool.json",
-            "selected": true
+            "selected": false
         },
         "Default": {
             "path": "json/default.json",
@@ -10,7 +10,7 @@
         },
         "Heavy Metal": {
             "path": "Patches/Metal_OD1.json",
-            "selected": false
+            "selected": true
         },
         "Metal low": {
             "path": "Patches/Metal_low.json",

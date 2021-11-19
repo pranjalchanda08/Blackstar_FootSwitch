@@ -6,7 +6,7 @@
         "delay_switch": 1,
         "delay_time": 512,
         "delay_type": 1,
-        "fx_focus": 2,
+        "fx_focus": 3,
         "gain": 8,
         "isf": 7.2,
         "master_volume": 0,
@@ -23,11 +23,11 @@
         "reverb_size": 17,
         "reverb_switch": 1,
         "reverb_type": 1,
-        "treble": 5,
+        "treble": 3.5,
         "tvp_switch": 1,
         "tvp_valve": 0,
         "voice": 1,
-        "volume": 5.7
+        "volume": 3.5
     },
     "name": "Clean Cool"
 }
