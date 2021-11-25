@@ -69,6 +69,8 @@ class foot_switch():
                 self.FS_BUTTON_DICT['Patch_index'], self.FS_BUTTON_DICT['Patch_len'] = ret, len
         else:
             logger.error("Failed to connect!")
+            os._exit(1)
+
     def close(self):
         try:
             self.alive = False
@@ -408,7 +410,7 @@ try:
         fs = foot_switch(logger=logger, mqtt_client=client)
     except Exception as e:
         logger.error(" Exception in Parent thread: " + str(e))
-        ctrl_c_handler(0,0)
+        os._exit(1)
     signal.signal(signal.SIGINT, ctrl_c_handler)
     signal.signal(signal.SIGTERM, ctrl_c_handler)
     client.loop_start()

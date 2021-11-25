@@ -10,11 +10,11 @@
         },
         "Heavy Metal": {
             "path": "Patches/Metal_OD1.json",
-            "selected": true
+            "selected": false
         },
         "Metal low": {
             "path": "Patches/Metal_low.json",
-            "selected": false
+            "selected": true
         },
         "Punk": {
             "path": "Patches/Punk.json",

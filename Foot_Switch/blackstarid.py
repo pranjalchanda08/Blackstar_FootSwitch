@@ -400,7 +400,7 @@ class BlackstarIDAmp(object):
         dev = devices[0]
         logger.debug('Device:\n' + str(dev))
 
-        # dev.reset()
+        dev.reset()
 
         # We know for this device there's only one configuration, so
         # no need to iterate through configurations below.

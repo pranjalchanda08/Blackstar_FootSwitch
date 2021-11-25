@@ -7,7 +7,7 @@
         "delay_time": 512,
         "delay_type": 0,
         "fx_focus": 0,
-        "gain": 7.1,
+        "gain": 7.2,
         "isf": 2.4,
         "master_volume": 0,
         "middle": 4.3,
@@ -23,11 +23,11 @@
         "reverb_size": 10,
         "reverb_switch": 0,
         "reverb_type": 0,
-        "treble": 3.6,
+        "treble": 3.5,
         "tvp_switch": 1,
-        "tvp_valve": 0,
+        "tvp_valve": 4,
         "voice": 3,
-        "volume": 3.5
+        "volume": 4.8
     },
     "name": "Metal Low"
 }

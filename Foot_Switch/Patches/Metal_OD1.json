@@ -6,8 +6,8 @@
         "delay_switch": 1,
         "delay_time": 512,
         "delay_type": 0,
-        "fx_focus": 0,
-        "gain": 7.9,
+        "fx_focus": 2,
+        "gain": 8.1,
         "isf": 2.4,
         "master_volume": 0,
         "middle": 4.3,
@@ -27,7 +27,7 @@
         "tvp_switch": 1,
         "tvp_valve": 4,
         "voice": 4,
-        "volume": 4.9
+        "volume": 5.4
     },
     "name": "Heavy Metal"
 }
